@@ -1,0 +1,152 @@
+{
+    "0": {
+        "cpu_capacity": 300,
+        "cpu": 275,
+        "instances": {
+            "14": {
+                "cpu": 25
+            }
+        }
+    },
+    "1": {
+        "cpu_capacity": 300,
+        "cpu": 267,
+        "instances": {
+            "4": {
+                "cpu": 33
+            }
+        }
+    },
+    "2": {
+        "cpu_capacity": 300,
+        "cpu": 259,
+        "instances": {
+            "13": {
+                "cpu": 41
+            }
+        }
+    },
+    "3": {
+        "cpu_capacity": 300,
+        "cpu": 275,
+        "instances": {
+            "8": {
+                "cpu": 25
+            }
+        }
+    },
+    "4": {
+        "cpu_capacity": 300,
+        "cpu": 292,
+        "instances": {
+            "7": {
+                "cpu": 8
+            }
+        }
+    },
+    "5": {
+        "cpu_capacity": 300,
+        "cpu": 263,
+        "instances": {
+            "16": {
+                "cpu": 37
+            }
+        }
+    },
+    "6": {
+        "cpu_capacity": 300,
+        "cpu": 259,
+        "instances": {
+            "19": {
+                "cpu": 41
+            }
+        }
+    },
+    "7": {
+        "cpu_capacity": 300,
+        "cpu": 217,
+        "instances": {
+            "1": {
+                "cpu": 83
+            }
+        }
+    },
+    "8": {
+        "cpu_capacity": 300,
+        "cpu": 292,
+        "instances": {
+            "18": {
+                "cpu": 8
+            },
+            "17": {
+                "cpu": 0
+            }
+        }
+    },
+    "9": {
+        "cpu_capacity": 300,
+        "cpu": 271,
+        "instances": {
+            "12": {
+                "cpu": 29
+            }
+        }
+    },
+    "10": {
+        "cpu_capacity": 300,
+        "cpu": 242,
+        "instances": {
+            "0": {
+                "cpu": 58
+            }
+        }
+    },
+    "11": {
+        "cpu_capacity": 300,
+        "cpu": 280,
+        "instances": {
+            "11": {
+                "cpu": 4
+            },
+            "5": {
+                "cpu": 16
+            },
+            "10": {
+                "cpu": 0
+            },
+            "3": {
+                "cpu": 0
+            },
+            "9": {
+                "cpu": 0
+            }
+        }
+    },
+    "12": {
+        "cpu_capacity": 300,
+        "cpu": 200,
+        "instances": {
+            "2": {
+                "cpu": 100
+            }
+        }
+    },
+    "13": {
+        "cpu_capacity": 300,
+        "cpu": 250,
+        "instances": {
+            "15": {
+                "cpu": 50
+            }
+        }
+    },
+    "14": {
+        "cpu_capacity": 300,
+        "cpu": 259,
+        "instances": {
+            "6": {
+                "cpu": 41
+            }
+        }
+    }
+}
