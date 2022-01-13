@@ -87,8 +87,8 @@ class Scheduler(object):
                 self.find_candidates()
                 self.make_decision2()
                 yield self.env.timeout(1)
-            else:
-                print('no schedule')
+            # else:
+            #     print('no schedule')
             #print(self.cluster.structure)
             yield self.env.timeout(1)
         #logging.info('now finish time:',self.env.now)

@@ -1,7 +1,8 @@
-from os import remove
+import imp
+
+
+import time
 import random
-import sys
-sys.path.append('..')
 from framework.machine import Machine
 
 
@@ -16,9 +17,7 @@ class Cluster(object):
             machine = Machine(machine_config)
             self.machines[machine.id] = machine
             machine.attach(self)
-
     def configure_instances(self, instance_configs):
-        #print('2')
         machine_ids = [v.id for k,v in self.machines.items()]
         print('mac: ',machine_ids)
         for instance_config in instance_configs:
@@ -38,12 +37,17 @@ class Cluster(object):
                     sets.remove(machine_id)
                 # TODO 没有一个machine适合放置该instance
                 if len(sets) == 0:
-                    #machine.add_instance(instance_config)
                     break
 
     @property
     def structure(self):
-        return {
+        return [ 
+        {
+            'time': time.asctime( time.localtime(time.time()) )
+        },
+        
+        {
+           
             i: {
                     'cpu_capacity': m.cpu_capacity,
                     # 'memory_capacity': m.memory_capacity,
@@ -60,4 +64,4 @@ class Cluster(object):
                     }
                 }
             for i, m in self.machines.items()
-        }
+        }]
