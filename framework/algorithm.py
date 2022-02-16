@@ -55,3 +55,5 @@ class ThresholdFirstFitAlgorithm(Algorithm):
             if inst.machine.to_schedule and not simulation.trigger.isOverhead(inst.machine) :
                 inst.machine.to_schedule = False
                 inst.machine = None
+    def choose(self):
+        return 0

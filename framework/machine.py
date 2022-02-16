@@ -1,3 +1,4 @@
+import this
 from framework.instance import Instance
 
 
@@ -30,15 +31,22 @@ class Machine(object):
 
     def attach(self, cluster):
         self.cluster = cluster
-        
+    def add_period_inc(self,inc_id,cpu,instances:dict):
+        if cpu < self.cpu:
+            instance = instances[inc_id]
+            instance.attach(self)
+            self.instances[instance.id] = instance
+            return True
+        return False
     def add_instance(self, instance_config):
         assert instance_config.cpu < self.cpu #and instance_config.memory <= self.memory and instance_config.disk <= self.disk
         instance = Instance(instance_config)
+        instance.attach(self)
         self.instances[instance.id] = instance
         """self.cpu -= instance.cpu
         self.memory -= instance.memory
         self.disk -= instance.disk"""
-        instance.attach(self)
+       
 
     def accommodate_w(self, instance, cpu_threshold=0.75, memory_threshold=0.75, disk_threshold=0.75):
         remain = self.cpu - instance.cpu 

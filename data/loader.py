@@ -20,12 +20,11 @@ def InstanceConfigLoader(vm_cpu_request_file, instance_number,machine_number=Non
             #print(f.name)
             cpus = pd.read_csv(f).values.squeeze().tolist()
             vm_cpu_requests.append(cpus)
-    for i in range(instance_number):
+    for instanceid in range(instance_number):
         cpu_curve = vm_cpu_requests[i]
         memory_curve = np.zeros_like(cpu_curve)
         disk_curve = np.zeros_like(cpu_curve)
-        macId = 0
-        instance_config = InstanceConfig(i,macId, cpu_curve[0], 0, disk_curve, cpu_curve, memory_curve)
+        instance_config = InstanceConfig(instanceid, cpu_curve[0], 0, disk_curve, cpu_curve, memory_curve)
         instance_configs.append(instance_config)
     
     return instance_configs

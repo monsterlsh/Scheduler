@@ -1,3 +1,4 @@
+from pydoc import ispackage
 import simpy
 
 import sys
@@ -15,6 +16,12 @@ class Simulation(object):
         self.cluster.configure_machines(machine_configs)
         self.cluster.configure_instances(instance_configs)
         
+        '''
+        cpu lists of all vms
+        '''
+        self.cpuListOfAllVms = {
+
+        }
         self.instance_cpu_curves = {
             self.cluster.machines[instance_config.machine_id].instances[instance_config.id]:
                 instance_config.cpu_curve for instance_config in instance_configs
@@ -40,11 +47,16 @@ class Simulation(object):
         self.env.process(self.scheduler.run())
         self.env.run()
 
-    @property
-    def finished(self):
+
+    def finished(self,isPeriod = False):
+        if isPeriod:
+            for cpulist in self.cluster.instances:
+                if self.env.now < len(cpulist):
+                    return True
         for instance_cpu_curve in self.instance_cpu_curves.values():
             if not instance_cpu_curve:
                 return True
+        
         # for instance_memory_curve in self.instance_memory_curves.items():
         #     if not instance_memory_curve:
         #         return True

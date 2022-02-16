@@ -1,5 +1,6 @@
 import logging
 import random
+
 class Scheduler(object):
     
     def __init__(self, env, algorithm):
@@ -28,14 +29,15 @@ class Scheduler(object):
             if machine is None or instance is None:
                 break
             else:
-                # pass # TODO reschedule instance
+                # TODO reschedule instance
                 if instance in self.cluster.instances_to_reschedule:
                     self.cluster.instances_to_reschedule.remove(instance)
                 print(f'At {self.env.now}, {machine.id} choose {instance.id} ')
                 machine.push(instance)
         instancs_tosc = len( self.cluster.instances_to_reschedule)
+    
     def make_decision2(self):
-        for instance in  self.cluster.instances_to_reschedule:
+        for instance in self.cluster.instances_to_reschedule:
             machine = self.algorithm(self.cluster, self.env.now)[0]
             # pass # TODO reschedule instance
             print(f'At {self.env.now}, {machine.id} choose {instance.id} ')
@@ -45,6 +47,7 @@ class Scheduler(object):
             machine.push(instance)
         instancs_tosc = len( self.cluster.instances_to_reschedule)
         self.cluster.instances_to_reschedule.clear()
+    
     def find_candidates(self):
         instances_to_reschedule_list = [inst 
             for machine in self.cluster.machines_to_schedule 
@@ -74,22 +77,48 @@ class Scheduler(object):
             inst.machine = None        
         self.cluster.instances_to_reschedule = instances_to_reschedule
    
-
+    def everytime(self):
+        self.sample()
+        self.simulation.trigger(self.cluster, self.env.now)
+        if self.cluster.machines_to_schedule:
+            print('At', self.env.now, 'scheduler was triggered!')
+            print("Machines to schedule", [machine.id for machine in self.cluster.machines_to_schedule])
+            #logging.info('At', self.env.now, 'scheduler was triggered!')
+            #logging.info("Machines to schedule", [machine.id for machine in self.cluster.machines_to_schedule])
+            self.find_candidates()
+            self.make_decision2()
+            yield self.env.timeout(1)
+    
+    def period_make_decision(self):
+        inc_cpuNow = {k:v[self.now] for k,v in self.cluster.instances.items()}
+        inc_cpuNow = sorted(inc_cpuNow.items(),key=lambda x:x[1])
+        machine_ids = [v.id for k,v in self.cluster.machines.items()]
+        for mac_id in machine_ids:
+            self.cluster.machines[mac_id].instances.clear()
+        for inc_id in inc_cpuNow.key():
+            #print(f'instance {instance_config.id} \'s cpu is {instance_config.cpu}')
+            while True:
+                machine_id = random.randint(0,len(self.cluster.machines.items())-1)
+                machine = self.cluster.machines.get(machine_id, None)
+                assert machine is not None
+                if machine.add_period_inc(inc_id,inc_cpuNow.get(inc_id),self.cluster.instances):
+                    #print(f'instance {instance_config.id} choose machine {machine_id}')
+                    break
+    
+    def periodSchedule(self,t,first,end):
+        if end-first+1 == t:
+            self.period_make_decision()
+        return False
+    
     def run(self):
-        while not self.simulation.finished:
-            self.sample()
-            self.simulation.trigger(self.cluster, self.env.now)
-            if self.cluster.machines_to_schedule:
-                print('At', self.env.now, 'scheduler was triggered!')
-                print("Machines to schedule", [machine.id for machine in self.cluster.machines_to_schedule])
-                #logging.info('At', self.env.now, 'scheduler was triggered!')
-                #logging.info("Machines to schedule", [machine.id for machine in self.cluster.machines_to_schedule])
-                self.find_candidates()
-                self.make_decision2()
-                yield self.env.timeout(1)
-            # else:
-            #     print('no schedule')
-            #print(self.cluster.structure)
+        last = 0
+        end = 0
+        while not self.simulation.finished(True):
+            #self.everytime()
+            end = self.env.now
+            if end != 0:
+                if self.periodSchedule(10,last,end):
+                    last = end
             yield self.env.timeout(1)
         #logging.info('now finish time:',self.env.now)
         print('now finish time:',self.env.now)

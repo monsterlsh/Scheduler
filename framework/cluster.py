@@ -1,26 +1,33 @@
+from http.client import ImproperConnectionState
 import imp
 
 
 import time
 import random
 from framework.machine import Machine
-
+from framework.instance import Instance
 
 class Cluster(object):
     def __init__(self):
         self.machines = {}
         self.machines_to_schedule = set()
         self.instances_to_reschedule = None
+        self.instances = {} #用在periodSchedule
 
     def configure_machines(self, machine_configs):
         for machine_config in machine_configs:
             machine = Machine(machine_config)
             self.machines[machine.id] = machine
             machine.attach(self)
+    '''
+    初次给host分配vm
+    '''
     def configure_instances(self, instance_configs):
         machine_ids = [v.id for k,v in self.machines.items()]
         print('mac: ',machine_ids)
         for instance_config in instance_configs:
+            inc = Instance(instance_config)
+            self.instances[inc.id] = inc.cpulist 
             sets = set()
             sets.update(machine_ids)
             #print(f'instance {instance_config.id} \'s cpu is {instance_config.cpu}')
@@ -30,7 +37,6 @@ class Cluster(object):
                 assert machine is not None
                 if machine.accommodate_w(instance_config):
                     machine.add_instance(instance_config)
-                    instance_config.machine_id = machine_id
                     #print(f'instance {instance_config.id} choose machine {machine_id}')
                     break
                 elif machine_id in sets:

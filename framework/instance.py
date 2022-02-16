@@ -1,8 +1,8 @@
 class InstanceConfig(object):
-    def __init__(self, instance_id, machine_id, cpu, memory, disk, cpu_curve=None, memory_curve=None):
+    def __init__(self, instance_id, cpu, memory, disk, cpu_curve=None, memory_curve=None):
         self.id = instance_id
-        self.machine_id = machine_id
-        self.cpu = cpu
+        #self.machine_id = machine_id
+        self.cpu = cpu #cpu序列第一个值
         self.memory = memory
         self.disk = disk
         self.cpu_curve = cpu_curve
