@@ -1,52 +1,102 @@
 [
     {
-        "time": "Thu Jan 13 17:04:03 2022"
+        "time": "Thu Feb 17 11:39:20 2022"
     },
     {
         "0": {
             "cpu_capacity": 300,
-            "cpu": 230,
-            "instances": {
-                "15": {
-                    "cpu": 70
-                }
-            }
+            "cpu": 300,
+            "instances": {}
         },
         "1": {
             "cpu_capacity": 300,
-            "cpu": 284,
+            "cpu": 255,
             "instances": {
                 "4": {
                     "cpu": 0
                 },
                 "10": {
-                    "cpu": 16
+                    "cpu": 25
+                },
+                "16": {
+                    "cpu": 20
                 }
             }
         },
         "2": {
             "cpu_capacity": 300,
-            "cpu": 196,
+            "cpu": 300,
             "instances": {
-                "14": {
-                    "cpu": 104
+                "13": {
+                    "cpu": 0
                 }
             }
         },
         "3": {
             "cpu_capacity": 300,
-            "cpu": 259,
+            "cpu": 300,
             "instances": {
-                "7": {
-                    "cpu": 41
+                "3": {
+                    "cpu": 0
+                },
+                "12": {
+                    "cpu": 0
+                },
+                "18": {
+                    "cpu": 0
                 }
             }
         },
         "4": {
             "cpu_capacity": 300,
-            "cpu": 292,
+            "cpu": 300,
+            "instances": {
+                "17": {
+                    "cpu": 0
+                }
+            }
+        },
+        "5": {
+            "cpu_capacity": 300,
+            "cpu": 196,
+            "instances": {
+                "15": {
+                    "cpu": 104
+                }
+            }
+        },
+        "6": {
+            "cpu_capacity": 300,
+            "cpu": 242,
             "instances": {
                 "0": {
+                    "cpu": 8
+                },
+                "2": {
+                    "cpu": 50
+                },
+                "5": {
+                    "cpu": 0
+                },
+                "7": {
+                    "cpu": 0
+                }
+            }
+        },
+        "7": {
+            "cpu_capacity": 300,
+            "cpu": 300,
+            "instances": {
+                "9": {
+                    "cpu": 0
+                }
+            }
+        },
+        "8": {
+            "cpu_capacity": 300,
+            "cpu": 292,
+            "instances": {
+                "11": {
                     "cpu": 0
                 },
                 "19": {
@@ -54,7 +104,33 @@
                 }
             }
         },
-        "5": {
+        "9": {
+            "cpu_capacity": 300,
+            "cpu": 300,
+            "instances": {}
+        },
+        "10": {
+            "cpu_capacity": 300,
+            "cpu": 263,
+            "instances": {
+                "1": {
+                    "cpu": 37
+                },
+                "8": {
+                    "cpu": 0
+                }
+            }
+        },
+        "11": {
+            "cpu_capacity": 300,
+            "cpu": 300,
+            "instances": {
+                "14": {
+                    "cpu": 0
+                }
+            }
+        },
+        "12": {
             "cpu_capacity": 300,
             "cpu": 225,
             "instances": {
@@ -63,95 +139,15 @@
                 }
             }
         },
-        "6": {
-            "cpu_capacity": 300,
-            "cpu": 284,
-            "instances": {
-                "18": {
-                    "cpu": 4
-                },
-                "8": {
-                    "cpu": 12
-                }
-            }
-        },
-        "7": {
-            "cpu_capacity": 300,
-            "cpu": 267,
-            "instances": {
-                "9": {
-                    "cpu": 33
-                }
-            }
-        },
-        "8": {
-            "cpu_capacity": 300,
-            "cpu": 272,
-            "instances": {
-                "12": {
-                    "cpu": 20
-                },
-                "16": {
-                    "cpu": 8
-                }
-            }
-        },
-        "9": {
-            "cpu_capacity": 300,
-            "cpu": 288,
-            "instances": {
-                "11": {
-                    "cpu": 8
-                },
-                "5": {
-                    "cpu": 4
-                }
-            }
-        },
-        "10": {
-            "cpu_capacity": 300,
-            "cpu": 242,
-            "instances": {
-                "2": {
-                    "cpu": 58
-                }
-            }
-        },
-        "11": {
-            "cpu_capacity": 300,
-            "cpu": 280,
-            "instances": {
-                "1": {
-                    "cpu": 20
-                }
-            }
-        },
-        "12": {
-            "cpu_capacity": 300,
-            "cpu": 292,
-            "instances": {
-                "17": {
-                    "cpu": 8
-                }
-            }
-        },
         "13": {
             "cpu_capacity": 300,
-            "cpu": 259,
-            "instances": {
-                "13": {
-                    "cpu": 41
-                }
-            }
+            "cpu": 300,
+            "instances": {}
         },
         "14": {
             "cpu_capacity": 300,
-            "cpu": 292,
-            "instances": {
-                "3": {
-                    "cpu": 8
-                }
-            }
+            "cpu": 300,
+            "instances": {}
         }
     }
 ]

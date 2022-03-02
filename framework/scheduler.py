@@ -3,16 +3,14 @@ import random
 
 class Scheduler(object):
     
-    def __init__(self, env, algorithm):
+    def __init__(self, env, algorithm,schedulePolicy):
         self.env = env
-        self.algorithm = algorithm
+        self.algorithm_ff = algorithm
+        self.algorithm_schedule = schedulePolicy
         self.simulation = None
         self.cluster = None
         self.widowsfilename = 'D:\Data\workplace\Github\scheduler\\framework\log\scheduler.log'
-        '''logging.basicConfig(level=logging.INFO,
-                            filename=self.widowsfilename,
-                            filemode='w',
-                            format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')'''
+    
 
     def attach(self, simulation):
         self.simulation = simulation
@@ -25,7 +23,7 @@ class Scheduler(object):
 
     def make_decision(self):
         while True:
-            machine, instance = self.algorithm(self.cluster, self.env.now)
+            machine, instance = self.algorithm_ff(self.cluster, self.env.now)
             if machine is None or instance is None:
                 break
             else:
@@ -38,7 +36,7 @@ class Scheduler(object):
     
     def make_decision2(self):
         for instance in self.cluster.instances_to_reschedule:
-            machine = self.algorithm(self.cluster, self.env.now)[0]
+            machine = self.algorithm_ff(self.cluster, self.env.now)[0]
             # pass # TODO reschedule instance
             print(f'At {self.env.now}, {machine.id} choose {instance.id} ')
             if instance.machine is not None:
@@ -67,7 +65,7 @@ class Scheduler(object):
         '''choose which instance to schduler
             random first select 
         '''
-        #self.algorithm.ChooseWhcihInstance(self.simulation,self.cluster,instances_to_reschedule)
+        #self.algorithm_ff.ChooseWhcihInstance(self.simulation,self.cluster,instances_to_reschedule)
         for inst in instances_to_reschedule:
             #if inst.machine.to_schedule :#and not self.simulation.trigger.isOverhead(inst.machine) :
             inst.machine.to_schedule = False
@@ -89,36 +87,53 @@ class Scheduler(object):
             self.make_decision2()
             yield self.env.timeout(1)
     
-    def period_make_decision(self):
-        inc_cpuNow = {k:v[self.now] for k,v in self.cluster.instances.items()}
-        inc_cpuNow = sorted(inc_cpuNow.items(),key=lambda x:x[1])
+    def period_make_decision(self,first,end):
+        inc_cpuNow = {inc_id:inc.cpulist[self.env.now] for inc_id,inc in self.cluster.instances.items()}
+        print(f'inc_cpuNow\'s type is {type(inc_cpuNow)}')
+        inc_cpuNow_sort = sorted(inc_cpuNow.items(),key=lambda x:x[1])
+        print(f'after sorted inc_cpuNow\'s type is {type(inc_cpuNow)}')
+        inc_cpuHistory = {inc_id:inc.cpulist[first:end+1] for inc_id,inc in self.cluster.instances.items()}
         machine_ids = [v.id for k,v in self.cluster.machines.items()]
         for mac_id in machine_ids:
             self.cluster.machines[mac_id].instances.clear()
-        for inc_id in inc_cpuNow.key():
+        for inc in inc_cpuNow_sort:
             #print(f'instance {instance_config.id} \'s cpu is {instance_config.cpu}')
+            inc_id = inc[0]
+            mac_set = set()
+            mac_num = len(self.cluster.machines.items())
             while True:
-                machine_id = random.randint(0,len(self.cluster.machines.items())-1)
+                machine_id = random.randint(0,mac_num-1)
+                mac_set.add(machine_id)
                 machine = self.cluster.machines.get(machine_id, None)
                 assert machine is not None
+                
                 if machine.add_period_inc(inc_id,inc_cpuNow.get(inc_id),self.cluster.instances):
-                    #print(f'instance {instance_config.id} choose machine {machine_id}')
+                    print(f'In period {self.env.now}, instance {inc_id} choose machine {machine_id}')
                     break
+                if len(mac_set) == mac_num:
+                    machine.add_period_inc(inc_id,inc_cpuNow.get(inc_id),self.cluster.instances,True)
+                    break
+                else:
+                    print(f'{self.env.now} the remain capacity of machine_{machine_id} is {machine.cpu}')
     
     def periodSchedule(self,t,first,end):
         if end-first+1 == t:
-            self.period_make_decision()
+            self.algorithm_schedule(self.cluster,self.env,first,end)
+            return True
         return False
     
     def run(self):
         last = 0
         end = 0
+        window = 10
         while not self.simulation.finished(True):
             #self.everytime()
+            print(f'time go on {self.env.now}')
             end = self.env.now
-            if end != 0:
-                if self.periodSchedule(10,last,end):
-                    last = end
+           
+            if self.periodSchedule(window,last,end):
+                print(f'period schedule on time {self.env.now} ')
+                last = end
             yield self.env.timeout(1)
         #logging.info('now finish time:',self.env.now)
         print('now finish time:',self.env.now)

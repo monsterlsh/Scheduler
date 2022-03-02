@@ -9,7 +9,7 @@ from framework.scheduler import Scheduler
 
 
 class Simulation(object):
-    def __init__(self, machine_configs, instance_configs, trigger, algorithm):
+    def __init__(self, machine_configs, instance_configs, trigger, algorithm,schedulePolicy):
         self.env = simpy.Environment()
         self.trigger = trigger
         self.cluster = Cluster()
@@ -26,6 +26,7 @@ class Simulation(object):
             self.cluster.machines[instance_config.machine_id].instances[instance_config.id]:
                 instance_config.cpu_curve for instance_config in instance_configs
         }
+        print('all vms of instance_cpu_curves coded in simulation : ',[x.id for x in self.instance_cpu_curves.keys()])
         self.instance_memory_curves = {
             self.cluster.machines[instance_config.machine_id].instances[instance_config.id]:
                 instance_config.memory_curve for instance_config in instance_configs
@@ -37,7 +38,7 @@ class Simulation(object):
         #     self.instance_memory_curves[instance] = instance_m_curve.tolist()
         
         #self.monitor = Monitor(self.env, trigger, algorithm)
-        self.scheduler = Scheduler(self.env, algorithm)
+        self.scheduler = Scheduler(self.env, algorithm,schedulePolicy)
 
         #self.monitor.attach(self)
         self.scheduler.attach(self)
@@ -50,8 +51,8 @@ class Simulation(object):
 
     def finished(self,isPeriod = False):
         if isPeriod:
-            for cpulist in self.cluster.instances:
-                if self.env.now < len(cpulist):
+            for vmid,vm in self.cluster.instances.items():
+                if self.env.now >= len(vm.cpulist): #TODO the type of cpulist is int. why? 
                     return True
         for instance_cpu_curve in self.instance_cpu_curves.values():
             if not instance_cpu_curve:

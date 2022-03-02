@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+# alibaba2018处理后数据中cpu每个值表示该container该时刻需要的cpu资源占96核（每台机器的cpu容量为96核）的百分比，比如8表示所需核数占机器核数的8%
+# mem每个值表示该container该时刻需要的mem资源占100（每台机器的mem容量为归一化后的100）的百分比，比如8表示所需内存占机器内存的8%
 
 class Trigger(ABC):
     @abstractmethod
