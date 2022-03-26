@@ -25,6 +25,16 @@ class MakespanRewardGiver(RewardGiver):
         super().get_reward()
         return self.reward_per_timestamp
 
+class SxyRewardGiver(RewardGiver):
+    name = 'Sxy'
+
+    def __init__(self, reward_per_timestamp):
+        super().__init__()
+        self.reward_per_timestamp = reward_per_timestamp
+
+    def get_reward(self):
+        super().get_reward()
+        return self.reward_per_timestamp
 
 class AverageCompletionRewardGiver(RewardGiver):
     name = 'AC'
@@ -32,5 +42,9 @@ class AverageCompletionRewardGiver(RewardGiver):
     def get_reward(self):
         super().get_reward()
         cluster = self.simulation.cluster
-        rescheduled_instance_len = len(cluster.instances_to_reschedule)
+        if cluster.instances_to_reschedule is not None:
+            rescheduled_instance_len = len(cluster.instances_to_reschedule)
+        else:
+            print('---------------------------------------------')
+            rescheduled_instance_len = 0
         return - rescheduled_instance_len

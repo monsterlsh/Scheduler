@@ -18,7 +18,7 @@ class Simulation(object):
         # for k,v in self.cluster.machines.items():
         #     ins = np.array([x.cpu for x in v.instances.values()])
         #     print('machine_',k,'sum is',np.sum(ins),ins)
-        #self.cluster.configure_pkl(modelfilename)
+        self.cluster.configure_pkl(modelfilename)
         self.instance_cpu_curves = {
             self.cluster.machines[instance_config.machine_id].instances[instance_config.id]:
                 instance_config.cpu_curve for instance_config in instance_configs.values()
@@ -48,7 +48,7 @@ class Simulation(object):
 
         if drl:
             self.env.process(self.monitor.run())
-            self.env.process(self.scheduler.run_drl())
+            #self.env.process(self.scheduler.run_drl())
         elif sand:
             self.env.process(self.scheduler.run_sand())
         else:

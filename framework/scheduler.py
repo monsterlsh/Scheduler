@@ -154,7 +154,7 @@ class Scheduler(object):
             value = self.algorithm_schedule(self.cluster, self.env, 0, end)
             sum += value
             after = time()
-            print(f'调度决策消耗了{(after-start)}s time go on {self.env.now} sum = {sum}')
+            print(f'sxy 调度决策消耗了{(after-start)}s time go on {self.env.now} sum = {sum}')
             yield self.env.timeout(1)
         print('now finish time:', self.env.now)
 

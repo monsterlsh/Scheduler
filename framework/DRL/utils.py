@@ -17,7 +17,9 @@ def multiprocessing_run(episode, trajectories, makespans):
     np.random.seed(int(time.time()))
     tf.random.set_random_seed(time.time())
     episode.run()
-    print(' \tmultiprocessing_run:',list(episode.simulation.monitor.algorithm.current_trajectory))
+    # print('multiprocessing_run:')
+    # for tra in episode.simulation.monitor.algorithm.current_trajectory: 
+    #     print(f'\t\t obs = {tra.observation} action = {tra.action} reward={tra.reward} clock={tra.clock}')
     trajectories.append(episode.simulation.monitor.algorithm.current_trajectory)
     makespans.append(episode.simulation.env.now)
     # print(episode.simulation.env.now)

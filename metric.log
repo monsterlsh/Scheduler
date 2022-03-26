@@ -308,4 +308,92 @@ At time 0, eval_bal=39986.48625199953,eval_mig = 2.2800000000000002
        3587, 2892, 3584, 3082, 3959,  556, 2996,  604, 3409])) 
 		                         the time consuming in SXY is 471.7500331401825. cost_min =254340.6669610012  
 		                         你要的数据：192133.52279300036   
+ At time 0, eval_bal=40028.10212799955,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.38641262054443. cost_min =0.0  
+		                         你要的数据：40028.10212799955   
+ At time 1, eval_bal=35839.07425199974,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.4594259262085. cost_min =0.0  
+		                         你要的数据：35839.07425199974   
+ At time 2, eval_bal=35828.77857900019,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.05939388275146. cost_min =0.0  
+		                         你要的数据：35828.77857900019   
+ At time 3, eval_bal=35972.729782000075,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.16455793380737. cost_min =0.0  
+		                         你要的数据：35972.729782000075   
+ At time 4, eval_bal=35563.47685400062,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.35561299324036. cost_min =0.0  
+		                         你要的数据：35563.47685400062   
+ At time 5, eval_bal=47770.80131899996,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.26950073242188. cost_min =0.0  
+		                         你要的数据：47770.80131899996   
+ At time 6, eval_bal=58244.495716000034,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.34578490257263. cost_min =0.0  
+		                         你要的数据：58244.495716000034   
+ At time 7, eval_bal=74896.59783199936,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.35730385780334. cost_min =0.0  
+		                         你要的数据：74896.59783199936   
+ At time 8, eval_bal=102519.98562099905,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.0357427597046. cost_min =0.0  
+		                         你要的数据：102519.98562099905   
+ At time 9, eval_bal=106782.54757599946,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.23830151557922. cost_min =0.0  
+		                         你要的数据：106782.54757599946   
+ At time 10, eval_bal=119351.59169699994,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.18114113807678. cost_min =0.0  
+		                         你要的数据：119351.59169699994   
+ At time 11, eval_bal=100247.87419500052,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.23542380332947. cost_min =0.0  
+		                         你要的数据：100247.87419500052   
+ At time 12, eval_bal=91916.49471399926,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.1748616695404. cost_min =0.0  
+		                         你要的数据：91916.49471399926   
+ At time 13, eval_bal=96644.0580780002,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.13823246955872. cost_min =0.0  
+		                         你要的数据：96644.0580780002   
+ At time 14, eval_bal=15584.941250999907,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 189.9435830116272. cost_min =0.0  
+		                         你要的数据：15584.941250999907   
+ At time 15, eval_bal=13717.192383000056,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.34842038154602. cost_min =0.0  
+		                         你要的数据：13717.192383000056   
+ At time 16, eval_bal=13697.596126000053,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.3832972049713. cost_min =0.0  
+		                         你要的数据：13697.596126000053   
+ At time 17, eval_bal=13678.108668000028,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.19767880439758. cost_min =0.0  
+		                         你要的数据：13678.108668000028   
+ At time 18, eval_bal=13667.601154000045,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.35020112991333. cost_min =0.0  
+		                         你要的数据：13667.601154000045   
+ At time 19, eval_bal=37136.955235999594,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.16613030433655. cost_min =0.0  
+		                         你要的数据：37136.955235999594   
+ At time 20, eval_bal=170551.93909599804,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.28249955177307. cost_min =0.0  
+		                         你要的数据：170551.93909599804   
+ At time 21, eval_bal=150194.21911699977,eval_mig = 0.0  
+		 the different array is = (array([], dtype=int64), array([], dtype=int64)) 
+		                         the time consuming in SXY is 190.42621612548828. cost_min =0.0  
+		                         你要的数据：150194.21911699977   
  

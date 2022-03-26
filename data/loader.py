@@ -61,9 +61,11 @@ def InstanceConfigLoader(vm_cpu_request_file,instance_number=None):
     #读取第一时刻vm安置的关系
     df = pd.read_csv(inc_mac_id_file,header = None)
     inc_ids = {}
+    old_new={}
     for idx,data in df.iterrows():
         inc_id = idx
         inc_ids[inc_id] = data[0]
+        old_new[data[0]] = inc_ids[inc_id]
         mac_id = data[1]
         if mac_id in mac:
             mac[mac_id].append(inc_id)
@@ -97,4 +99,4 @@ def InstanceConfigLoader(vm_cpu_request_file,instance_number=None):
     # print(instance_configs.keys())
     # print(f'machine len={len(machine_configs)},instance len ={len(instance_configs)}')
     
-    return instance_configs,machine_configs
+    return instance_configs,machine_configs,old_new

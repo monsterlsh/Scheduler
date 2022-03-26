@@ -29,7 +29,8 @@ class ThresholdTrigger(Trigger):
                 machine.to_schedule = True
                 #print(f'there is trigger , and macid is {machine.id},it\'s cpu left is {machine.cpu} and now is',clock)
                 cluster.machines_to_schedule.add(machine)
-                return True
+                #return True
+            
 
     def isOverhead(self,machine):
         return  machine.cpu < 0 or machine.cpu / machine.cpu_capacity < 1 - self.cpu_threshold

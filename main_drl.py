@@ -20,7 +20,7 @@ from framework.trigger import ThresholdTrigger
 from framework.DRL.agent import Agent
 from framework.DRL.DRL import RLAlgorithm
 from framework.DRL.policynet import PolicyNet
-from framework.DRL.reward_giver import AverageCompletionRewardGiver, MakespanRewardGiver
+from framework.DRL.reward_giver import AverageCompletionRewardGiver, MakespanRewardGiver,SxyRewardGiver
 from framework.DRL.utils import features_extract_func, features_normalize_func, multiprocessing_run
 
 os.environ['CUDA_VISIBLE_DEVICES'] = ''
@@ -65,7 +65,7 @@ n_iter = 100
 n_episode = 12
 
 policynet = PolicyNet(5)
-reward_giver = MakespanRewardGiver(-1)
+reward_giver =  AverageCompletionRewardGiver() # MakespanRewardGiver(-1)
 features_extract_func = features_extract_func
 features_normalize_func = features_normalize_func
 
@@ -118,7 +118,7 @@ for itr in range(n_iter):
     all_observations = []
     all_actions = []
     all_rewards = []
-    print('\tafter multiprocess: ',trajectories,makespans)
+    #print('\tafter multiprocess: ',trajectories,makespans)
     for trajectory in trajectories:
         observations = []
         actions = []

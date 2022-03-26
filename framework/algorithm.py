@@ -102,34 +102,34 @@ class SchdeulerPolicyAlgorithm(Algorithm):
             start = time()
             newmape = 0
             flag = False
-            # if np.mean(cpuHist[-5:-1]) == 0:
-            #     next_cpu = np.zeros(W)
-            # else:
-            # # TODO 这里的预测所调的方法是需要改改的
-            #     if inc_id in self.cluster.model.keys():
-            #         flag = True
+            if np.mean(cpuHist[-5:-1]) == 0 or np.mean(memHist[-5:-1]) :
+                next_cpu = np.zeros(W)
+                next_mem = np.zeros(W)
+            else:
+                flag = True
+                try:
+                    old_inc_id = self.cluster.old_new[inc_id] 
+                    model_id = self.cluster.inc_model_cpu[str(old_inc_id)]
+                    model =  self.cluster.model[model_id].apply(cpuHist,refit=True)
+                    next_cpu = model.forecast(W,alphas=0.01)
+                except:
+                    print(f'container inc_id = {inc_id} 的model不行')
+                    model =  pmdarima.arima.auto_arima(cpuHist)
                     
-            #         try:
-            #             model =  self.cluster.model[inc_id].apply(cpuHist,refit=True)
-            #             next_cpu = model.forecast(W,alphas=0.01)
-            #         except:
-            #             print(f'container inc_id = {inc_id} 的model不行')
-            #             model =  pmdarima.arima.auto_arima(cpuHist)
-                        
-            #             next_cpu = model.predict(W,alphas=0.01)
-            #             print('there is auto')
-                        
-            #         actual = np.array(instance.cpulist[end+1:end+W+1])
-            #         forecast,actual = self.reduce0(next_cpu,actual)
-            #         if actual.shape[0] != 0:
-            #             newmape = mean_absolute_percentage_error(forecast,actual)
-                
+                    next_cpu = model.predict(W,alphas=0.01)
+                    print('there is auto')
+                    
+                actual = np.array(instance.cpulist[end+1:end+W+1])
+                forecast,actual = self.reduce0(next_cpu,actual)
+                if actual.shape[0] != 0:
+                    newmape = mean_absolute_percentage_error(forecast,actual)
+            
                        
             
 
             # 不预测
-            next_cpu = instance.cpulist[end:end+W]
-            next_mem = instance.memlist[end:end+W]
+            # next_cpu = instance.cpulist[end:end+W]
+            # next_mem = instance.memlist[end:end+W]
             
             after = time()
             all = after-start

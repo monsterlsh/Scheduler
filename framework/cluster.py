@@ -6,6 +6,7 @@ import time
 import numpy as np
 import pandas as pd
 import os
+import json
 from statsmodels.tsa.arima.model import ARIMAResults
 
 from sklearn import cluster
@@ -29,7 +30,8 @@ class Cluster(object):
             machine = Machine(machine_config)
             self.machines[machine.id] =machine
             machine.attach(self)
-        
+    def add_old_new(self,old_new):
+        self.old_new = old_new
     '''
     初次给host分配vm
     '''
@@ -48,10 +50,15 @@ class Cluster(object):
 
         self.update_t0()
     def configure_pkl(self,filepath):
-        files = os.listdir(filepath)
+        cpu_jsonfile = '/hdd/lsh/Scheduler/arima/json/inc_model_cpu.json'
+        with open(cpu_jsonfile,'r') as fp:
+            json_data = json.load(fp)
+        self.inc_model_cpu = json_data
+        model_filename = '/hdd/lsh/Scheduler/arima/models_cpu'
+        files = os.listdir(model_filename)
         for idx,file in enumerate(files):
             filename = os.path.join(filepath, file)
-            ids = int(file[:file.rfind('.')])
+            ids = file[:file.rfind('.')]
             self.modelfiles[ids] = filename
             model = ARIMAResults.load(filename )
             self.model[ids] = model
