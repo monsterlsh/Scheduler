@@ -1,6 +1,6 @@
 import this
 
-from prometheus_client import instance_ip_grouping_key
+#from prometheus_client import instance_ip_grouping_key
 from framework.instance import Instance
 
 
@@ -38,6 +38,10 @@ class Machine(object):
             self.instances[instance.id] = instance
             return True
         return False
+        
+    def add_instance_init(self,instance:Instance):
+        instance.attach(self)
+        self.instances[instance.id] = instance
 
     def add_instance(self, instance_config):
         assert instance_config.cpu <= self.cpu and instance_config.memory <= self.memory #and instance_config.disk <= self.disk
@@ -73,8 +77,13 @@ class Machine(object):
     @property
     def cpu(self):
         occupied = 0
+        
         for instance in self.instances.values():
+            # if occupied == 0:
+            #     print('inc:',instance.id,len(instance.cpulist))
             occupied += instance.cpu
+            
+            
         return self.cpu_capacity - occupied
     @property
     def isOKAddIns(self,cpu_threshold=0.75):

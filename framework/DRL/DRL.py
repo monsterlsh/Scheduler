@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 tf.enable_eager_execution()
-
+#tf.compat.v1.disable_eager_execution()
 
 class Node(object):
     def __init__(self, observation, action, reward, clock):
@@ -32,7 +32,7 @@ class RLAlgorithm(object):
         machines = cluster.machines.values()
         instances_to_reschedule = cluster.instances_to_reschedule
         all_candidates = []
-
+        print(f'instances_to_reschedule={instances_to_reschedule}')
         for machine in machines:
             for inst in instances_to_reschedule:
                 if machine.accommodate_w(inst):

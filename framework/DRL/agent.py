@@ -2,6 +2,8 @@ import time
 import copy
 import numpy as np
 import tensorflow as tf
+# import tensorflow.compat.v1 as tf
+#tf.disable_v2_behavior()
 
 
 class Agent(object):
@@ -14,6 +16,7 @@ class Agent(object):
         self.baseline = nn_baseline
         self.normalize_advantages = normalize_advantages
         self.optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+        #self.optimizer = tf.optimizers.Adam(learning_rate=0.001)
         self.global_step = tf.train.get_or_create_global_step()
         self.summary_path = summary_path if summary_path is not None else './tensorboard/%s--%s' % (
             name, time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime()))

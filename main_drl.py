@@ -27,7 +27,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 np.random.seed(41)
 tf.random.set_random_seed(41)
-
+#tf.random.set_seed(41)
 # ************************ Data loading Start ************************
 # for cloudsimpy
 machines_number = 5
@@ -38,18 +38,18 @@ machines_number = 5
 # jobs_configs = csv_reader.generate(0, jobs_len)
 
 # for partitionschduler
-machine_configs = [
-    MachineConfig(0, 12, 20, 20),
-    MachineConfig(1, 21, 25, 25)
-]  # MachineConfigLoader('./data/machine_resources.a.csv'):id+cpu+mem+disk
+machine_configs = {
+   0: MachineConfig(0, 12, 20, 20),
+    1:MachineConfig(1, 21, 25, 25)
+}  # MachineConfigLoader('./data/machine_resources.a.csv'):id+cpu+mem+disk
 
-instance_configs = [
-    InstanceConfig(0, 0, 3, 5, 5, [3, 6, 5], [5, 5, 5]),
-    InstanceConfig(1, 0, 3, 5, 5, [3, 2, 1], [5, 5, 5]),
-    InstanceConfig(2, 1, 5, 5, 5, [5, 5, 5], [5, 5, 5]),
-    InstanceConfig(3, 1, 5, 5, 5, [5, 5, 5], [5, 5, 5]),
-    InstanceConfig(4, 1, 5, 5, 5, [5, 5, 5], [5, 5, 5])
-]  # InstanceConfigLoader('./data/output_instance_deployed_a.csv')
+instance_configs = {
+    0:InstanceConfig(0, 0, 3, 5, 5, [3, 6, 5], [5, 5, 5]),
+    1:InstanceConfig(0, 1, 3, 5, 5, [3, 2, 1], [5, 5, 5]),
+   2: InstanceConfig(0, 2, 5, 5, 5, [5, 5, 5], [5, 5, 5]),
+   3: InstanceConfig(1, 3, 5, 5, 5, [5, 5, 5], [5, 5, 5]),
+   4: InstanceConfig(1, 4, 5, 5, 5, [5, 5, 5], [5, 5, 5])
+}  # InstanceConfigLoader('./data/output_instance_deployed_a.csv')
 
 # for alibaba trace
 # machines_number = 1313
@@ -91,15 +91,17 @@ for itr in range(n_iter):
     average_completions = manager.list([])
     average_slowdowns = manager.list([])
     for i in range(n_episode):
+        if i==12:
+            print()
         algorithm = RLAlgorithm(agent, reward_giver, features_extract_func=features_extract_func,
                                 features_normalize_func=features_normalize_func)
         trigger = ThresholdTrigger()
         episode = Episode(machine_configs, instance_configs, trigger, algorithm, None)
         algorithm.reward_giver.attach(episode.simulation)
-        p = Process(target=multiprocessing_run,
-                    args=(episode, trajectories, makespans))
-
+        p = Process(target=multiprocessing_run,args=(episode, trajectories, makespans))
+        #episode.run()
         processes.append(p)
+        print('i=',i)
 
     for p in processes:
         p.start()
@@ -116,6 +118,7 @@ for itr in range(n_iter):
     all_observations = []
     all_actions = []
     all_rewards = []
+    print('\tafter multiprocess: ',trajectories,makespans)
     for trajectory in trajectories:
         observations = []
         actions = []

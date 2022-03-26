@@ -1,39 +1,32 @@
+from email import header
 import pandas as pd
 import os
 import csv
 import numpy as np
+import pandas as pd
 from framework.instance import InstanceConfig
 from framework.machine import MachineConfig
 import random
+#import dask.dataframe as dd
 def read_iterator(filepath,readNumPrecent=0.125):
-    cpulist = []
-    memlist = []
+    cpulist = {}
+    memlist = {}
     files = os.listdir(filepath)
-    n = int(69119*0.125)
+    #n = int(800)
     for idx,file in enumerate(files):
         filename = os.path.join(filepath, file)
-        with open(filename) as f:
-            cpus = pd.read_csv(f,iterator=True,header=None)
-            cpus = cpus.get_chunk(n)
-            cpu = cpus[0].values.squeeze().tolist()
-            mem = cpus[1].values.squeeze().tolist()
-            cpulist.append(cpu[:int(len(cpu)*readNumPrecent)])
-            memlist.append(mem[:int(len(mem)*readNumPrecent)])
-        print(idx,',',filename,',',n)
+        ids = int(filename[filename.rfind('_')+1:filename.rfind('.')])
+        df = pd.read_csv(filename)
+        #cpus = cpus.get_chunk(n)
+        #df = pd.read_csv(f,header=None)
+        #df.rename(columns={0:'cpu' ,1:'mem'},inplace=True)
+        cpu = df.iloc[:,0].values.squeeze().tolist()
+        mem = df.iloc[:,1].values.squeeze().tolist()
+        cpulist[ids] = cpu
+        memlist[ids] = mem
+        
+        #print(idx,',',filename,', cpu list: ',len(cpulist))
     return cpulist,memlist
-    '''
-    with os.scandir(filepath) as entries:
-        for entry in entries:
-            if entry.is_file():
-                filename = os.path.join(filepath, entry.name)
-                #print(filename)
-                with open(filename) as f:
-                    cpus = pd.read_csv(f,header=None)
-                    cpu = cpus[0].values.squeeze().tolist()
-                    mem = cpus[1].values.squeeze().tolist()
-                    cpulist.append(cpu)
-                    memlist.append(mem)
-    '''
     
 def old_version(vm_cpu_request_file,instance_number):
     firlist = os.listdir(vm_cpu_request_file)
@@ -49,25 +42,59 @@ def old_version(vm_cpu_request_file,instance_number):
             cpus = pd.read_csv(f).values.squeeze().tolist()
             vm_cpu_requests.append(cpus)
     return vm_cpu_requests
-    
+
+# TODO 添加初始machine
 def InstanceConfigLoader(vm_cpu_request_file,instance_number=None):
-    instance_configs = []
-    # vm_cpu_requests = None
-    # vm_mem_requests = None
+    instance_configs = {}
+    inc_mac_id_file = '/hdd/lsh/Scheduler/data/container_machine_id.csv'
+    vm_mac = {}
+    machine_configs = {}
+    #读取所有vm的资源
     if instance_number is None :
         vm_cpu_requests , vm_mem_requests = read_iterator(vm_cpu_request_file)
     else:
         vm_cpu_requests = old_version(vm_cpu_request_file,instance_number)
-    for instanceid in range(len(vm_cpu_requests)):
-        print('读取 container',instanceid)
-        cpu_curve = vm_cpu_requests[instanceid]
-        if instance_number is None:
-            memory_curve = vm_mem_requests[instanceid]
-        else:
-            memory_curve = np.zeros_like(cpu_curve)
-        disk_curve = np.zeros_like(cpu_curve)
-        #暂时都放在0号机器上
-        instance_config = InstanceConfig(0,instanceid, cpu_curve[0], 0, disk_curve, cpu_curve, memory_curve)
-        instance_configs.append(instance_config)
     
-    return instance_configs
+    # cpulist = df.iloc[:,0]
+    # maclist = df.iloc[:,1]
+    mac = {}
+    #读取第一时刻vm安置的关系
+    df = pd.read_csv(inc_mac_id_file,header = None)
+    inc_ids = {}
+    for idx,data in df.iterrows():
+        inc_id = idx
+        inc_ids[inc_id] = data[0]
+        mac_id = data[1]
+        if mac_id in mac:
+            mac[mac_id].append(inc_id)
+        else:
+            mac[mac_id] = [inc_id]
+        #inc_ids.append(inc_id)
+        
+    mac = {k:v for k,v in sorted(mac.items(),key=lambda x:x[0])}
+    mac_new = {}
+    idx = 0
+    for k,v in mac.items():
+        mac_new[idx] = v
+        idx = idx+1
+    mac = mac_new
+    inc_num = set()
+    for machine_id,data in mac.items():
+        #print("[{}]: {}".format(idx,data))
+        #mac_id = data['macid']-1
+        #vm_mac[instanceid] = mac_id
+        machine = MachineConfig(machine_id,100,100,100)
+        machine_configs[machine_id] = machine
+        for instanceid in data:
+            inc_num.add(instanceid)
+            cpu_curve = vm_cpu_requests[inc_ids[instanceid]]
+            memory_curve = vm_mem_requests[inc_ids[instanceid]]
+            disk_curve = np.zeros_like(cpu_curve)
+            instance_config = InstanceConfig(machine_id,instanceid, cpu_curve[0], memory_curve[0], disk_curve, cpu_curve, memory_curve)
+            instance_configs[instanceid]=instance_config
+        #machine_id = machine_id + 1
+    # print(machine_configs.keys())
+    # print(instance_configs.keys())
+    # print(f'machine len={len(machine_configs)},instance len ={len(instance_configs)}')
+    
+    return instance_configs,machine_configs

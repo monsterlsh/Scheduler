@@ -27,16 +27,15 @@ def simple_test(filepath):
     struct = sim.cluster.structure
     with open(res_struct_filename,'w') as file_job:
         json.dump(struct,file_job)
-def test_all(filepath):
+def test_all(filepath,modelfilepath):
     res_struct_filename = os.path.join(os.getcwd(),'struct.json')
-    machine_number = 4034
-    machine_configs = []
-    for id in range(machine_number):
-        machine = MachineConfig(id,100,100,100)
-        machine_configs.append(machine)
-    instance_configs = InstanceConfigLoader(filepath)
-    sim = Simulation(machine_configs, instance_configs, ThresholdTrigger(), ThresholdFirstFitAlgorithm(),SchdeulerPolicyAlgorithm())
-    sim.run()
+    
+    instance_configs,machine_configs = InstanceConfigLoader(filepath)
+    #print(f' all inc {len(instance_configs) } and  mac is {machine_configs}')
+   
+    sim = Simulation(machine_configs, instance_configs, ThresholdTrigger(), ThresholdFirstFitAlgorithm(),SchdeulerPolicyAlgorithm(),modelfilepath)
+    sand = True
+    sim.run(False,sand)
     struct = sim.cluster.structure
     with open(res_struct_filename,'w') as file_job:
         json.dump(struct,file_job)
@@ -45,7 +44,9 @@ def test_all(filepath):
 if __name__ == '__main__':
     macFile = '/Users/lsh/Documents/ecnuIcloud/Trace/alibaba_2018/intp_dir'
     windowsFile = 'D:\Data\workplace\ecnuicloud\Traces\intp_dir\\'
-    linux_file = '/hdd/jbinin/alibaba2018_data_extraction/data/hole'
-    #test_all(linux_file)
-    simple_test(linux_file)
+    test_10s = '/hdd/jbinin/alibaba2018_data_extraction/data/hole'
+    linux_file = '/hdd/jbinin/AlibabaData/target/'
+    modelfilepath = '/hdd/lsh/Scheduler/arima/model'
+    test_all(linux_file,modelfilepath)
+    #simple_test(linux_file)
     

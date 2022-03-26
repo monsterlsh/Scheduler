@@ -1,22 +1,25 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+import numpy as np
 
 # 计算每台机器上资源使用量
 # 输入为t时刻各VM的cpu需求量以及VM放置情况
 # 输出为t时刻各机器的资源使用总量
 def ResourceUsage(cpu_t, x_t):
-    x_cput = np.empty(shape = [0, len(cpu_t)])  # 创建空矩阵
-    row = 0   #  利用矩阵索引取矩阵每一行元素，初值为0
-    for i in range(len(cpu_t)):    # 几行乘几次
-        temp = x_t[row, :] * cpu_t[row]    #  对矩阵xt第0行所有元素乘以cpu[0]的值
-        x_cput = np.vstack((x_cput, temp))   #  按行合并矩阵，利用空矩阵实现第一次迭代
-        row = row + 1
+    # x_cput = np.empty(shape = [0, len(cpu_t)])  # 创建空矩阵
+    # row = 0   #  利用矩阵索引取矩阵每一行元素，初值为0
+    # for i in range(len(cpu_t)):    # 几行乘几次
+    #     temp = x_t[row, :] * cpu_t[row]    #  对矩阵xt第0行所有元素乘以cpu[0]的值
+    #     x_cput = np.vstack((x_cput, temp))   #  按行合并矩阵，利用空矩阵实现第一次迭代
+    #     row = row + 1
     
+    # CPU_t = np.sum(x_cput, axis = 0) # 各列之和，即各机器上的cpu总需求量
+    x_cput = x_t.copy().T
+    x_cput = np.matmul(x_cput,cpu_t)
     CPU_t = np.sum(x_cput, axis = 0) # 各列之和，即各机器上的cpu总需求量
-    
     return CPU_t
+    
 
 
 
@@ -58,14 +61,15 @@ def RandomGreedy(M, a,b, u, v, x_last, cpu_t, mem_t):
     
     # 将机器分为都大于+某项大于、都等于和都小于均值的3个集合
     # all_over = np.where((CPU_t > avg_CPU) & (MEM_t > avg_MEM)) # 存储的是满足条件的元素的索引，即机器编号
-    any_over = np.where((CPU_t > avg_CPU) | (MEM_t > avg_MEM))
+    any_over = np.where((CPU_t > avg_CPU) | (MEM_t > avg_MEM))[0]
     # one_over = np.setdiff1d(any_over, all_over) # 在any_over中但不在all_over中的元素，即只有一项大于的
-    all_equal = np.where((CPU_t == avg_CPU) & (MEM_t == avg_MEM))
-    all_under = np.where((CPU_t < avg_CPU) & (MEM_t < avg_MEM))
+    all_equal = np.where((CPU_t == avg_CPU) & (MEM_t == avg_MEM))[0]
+    all_under = np.where((CPU_t < avg_CPU) & (MEM_t < avg_MEM))[0]
     
     # 在any_over中随机选择u比例个机器作为迁出机器
     num_source = max(int(u * len(any_over)), 1) # 至少选一个
-    source = random.choice(any_over, num_source, replace = False) # 随机乱序选择num_source个元素
+    #print('test:',any_over,num_source)
+    source = np.random.choice(any_over, num_source, replace = False) # 随机乱序选择num_source个元素
     
     # 对每台迁出机器随机选择v比例个VM迁出
     mig = np.empty(shape = 0, dtype = int) # 所有要迁移的VM
@@ -73,7 +77,7 @@ def RandomGreedy(M, a,b, u, v, x_last, cpu_t, mem_t):
         s_x = x_last[:, s] # 该机器
         num_s = np.sum(s_x) # 该机器上VM总数
         num_mig_s = max(int(v * num_s), 1) # 迁移VM个数，至少迁一个
-        mig_candi_s = np.where(s_x == 1) # 能被迁走的VM候选集
+        mig_candi_s = np.where(s_x == 1)[0] # 能被迁走的VM候选集
         mig_s = random.choice(mig_candi_s, num_mig_s, replace = False) # 随机乱序选择num_mig个元素
         mig = np.append(mig, mig_s)
     
@@ -116,7 +120,7 @@ from numpy import random
 def SchedulePolicy(Z, K, W, u, v, x_t0, N, cpu, mem, M, CPU_MAX, MEM_MAX, a, b):
     # 初始化为不进行任何迁移时的开销，即只有负载均衡开销
     cost_min = 0
-    for i in range(W):
+    for t in range(W):
         cpu_t = cpu[:, t] # 提取cpu矩阵中第t-1列，比如t=0即提取下一时刻各VM的cpu需求量
         mem_t = mem[:, t]
         cost_t = CostOfLoadBalance(cpu_t, mem_t, x_t0, b) # 不进行任何迁移时在当前时刻的负载均衡开销
@@ -130,6 +134,7 @@ def SchedulePolicy(Z, K, W, u, v, x_t0, N, cpu, mem, M, CPU_MAX, MEM_MAX, a, b):
         x_t1 = x_t0
         
         for t in range(W):
+            print(f' in random_greddy z = {z} t = {t}')
             # 选择满足约束的随机放置，若K次都不满足，则启用备用方案
             k = 0
             flag = 0
@@ -169,7 +174,7 @@ def SchedulePolicy(Z, K, W, u, v, x_t0, N, cpu, mem, M, CPU_MAX, MEM_MAX, a, b):
             placement = x_t1
     
     # 执行完Z次随机采样后，按照最终placement矩阵的值进行调度
-    return placement
+    return placement,cost_min
 
 
 

@@ -1,0 +1,86 @@
+nohup: ignoring input
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+67437  3989
+update consuming  0.10671567916870117
+update consuming  2.5497400760650635
+调度决策消耗了477.15570092201233s time go on 0 sum = 49079.12625199953
+update consuming  2.70060133934021
+调度决策消耗了488.7668056488037s time go on 1 sum = 117709.10669199922
+update consuming  2.6471006870269775
+调度决策消耗了481.9317421913147s time go on 2 sum = 153422.48160799936
+update consuming  2.685727834701538
+调度决策消耗了478.21049404144287s time go on 3 sum = 197260.0711319995
+update consuming  2.7025296688079834
+调度决策消耗了479.42901062965393s time go on 4 sum = 240699.5217380001
+update consuming  2.5865962505340576
+调度决策消耗了490.0133605003357s time go on 5 sum = 319169.3245210001
+update consuming  2.71262526512146
+调度决策消耗了476.58964562416077s time go on 6 sum = 396688.61098900007
+update consuming  2.68811297416687
+调度决策消耗了477.7135455608368s time go on 7 sum = 515888.08954499935
+update consuming  2.671189785003662
+调度决策消耗了496.5403046607971s time go on 8 sum = 749187.4237409984
+update consuming  2.9008235931396484
+调度决策消耗了481.749977350235s time go on 9 sum = 1009828.782680998
+update consuming  3.0630171298980713
+调度决策消耗了515.9602086544037s time go on 10 sum = 1384375.309797998
+update consuming  3.3191564083099365
+调度决策消耗了518.4806337356567s time go on 11 sum = 1598860.3539719987
+update consuming  2.68808913230896
+调度决策消耗了492.07552671432495s time go on 12 sum = 1752656.7035669982
+update consuming  2.7590935230255127
+调度决策消耗了477.04796409606934s time go on 13 sum = 1879332.0505029985
+update consuming  2.66409969329834
+调度决策消耗了482.53385639190674s time go on 14 sum = 1894805.7586139985
+update consuming  2.7193844318389893
+调度决策消耗了491.2727224826813s time go on 15 sum = 1908457.7436139986
+update consuming  2.675187826156616
+调度决策消耗了491.0431168079376s time go on 16 sum = 1922090.0450129986
+update consuming  2.7139904499053955
+调度决策消耗了355.6014630794525s time go on 17 sum = 1935702.7937369987
+update consuming  2.695634365081787
+调度决策消耗了350.91833662986755s time go on 18 sum = 1949304.8955069988
+update consuming  2.6585464477539062
+调度决策消耗了520.4200875759125s time go on 19 sum = 1985886.1649939986
+update consuming  2.7218518257141113
+调度决策消耗了498.4415156841278s time go on 20 sum = 2153053.4397719963
+update consuming  2.707813024520874
+调度决策消耗了479.2391028404236s time go on 21 sum = 2576382.6601519966
+update consuming  2.6943771839141846
+调度决策消耗了478.6241433620453s time go on 22 sum = 2821213.1424079966
+update consuming  2.9399232864379883
+调度决策消耗了515.8008332252502s time go on 23 sum = 2975036.5868279957
+update consuming  2.693959951400757
+调度决策消耗了499.44060373306274s time go on 24 sum = 3090012.365913995
+update consuming  2.662707567214966
+调度决策消耗了485.53397727012634s time go on 25 sum = 3203855.462138995
+update consuming  2.6138899326324463
+调度决策消耗了480.87795186042786s time go on 26 sum = 3309067.232313995
+update consuming  2.6178672313690186
+调度决策消耗了479.474782705307s time go on 27 sum = 3378300.4561069943
+update consuming  2.624518394470215
+调度决策消耗了476.1712734699249s time go on 28 sum = 3461307.605332995
+update consuming  2.7565624713897705
+调度决策消耗了478.3877856731415s time go on 29 sum = 3568025.3204269945
+update consuming  2.701892852783203
+调度决策消耗了476.5089318752289s time go on 30 sum = 3760158.843219995

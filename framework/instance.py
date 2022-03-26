@@ -3,6 +3,7 @@ class InstanceConfig(object):
         self.id = instance_id
         self.machine_id = machine_id
         self.cpu = cpu #cpu序列第一个值
+        self.mem = 0
         self.memory = memory
         self.disk = disk
         self.cpu_curve = cpu_curve
@@ -12,6 +13,7 @@ class InstanceConfig(object):
 class Instance(object):
     def __init__(self, instance_config:InstanceConfig):
         self.id = instance_config.id
+        self.mac_id = instance_config.machine_id
         self.cpu = instance_config.cpu
         self.memory = instance_config.memory
         self.memlist = instance_config.memory_curve

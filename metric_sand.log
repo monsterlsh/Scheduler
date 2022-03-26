@@ -1,0 +1,270 @@
+eval_bal = 44257.42636399978   ,  eval_mig = 0.22 
+		 consuming 10.107403039932251s, time is 0                 
+		 sum=45134.78636399978 
+eval_bal = 39181.444002000055   ,  eval_mig = 0.31 
+		 consuming 10.001914739608765s, time is 1                 
+		 sum=40417.72400200005 
+eval_bal = 38840.13786500009   ,  eval_mig = 0.0 
+		 consuming 9.860732793807983s, time is 2                 
+		 sum=38840.13786500009 
+eval_bal = 39084.81059399941   ,  eval_mig = 0.0 
+		 consuming 10.07891321182251s, time is 3                 
+		 sum=39084.81059399941 
+eval_bal = 38583.460594999706   ,  eval_mig = 0.45 
+		 consuming 10.089677572250366s, time is 4                 
+		 sum=40378.060594999704 
+eval_bal = 52889.82564900045   ,  eval_mig = 0.63 
+		 consuming 10.133877754211426s, time is 5                 
+		 sum=55402.26564900045 
+eval_bal = 65868.97246099969   ,  eval_mig = 0.67 
+		 consuming 10.210457563400269s, time is 6                 
+		 sum=68540.9324609997 
+eval_bal = 85442.9941970009   ,  eval_mig = 0.79 
+		 consuming 9.975489616394043s, time is 7                 
+		 sum=88593.5141970009 
+eval_bal = 118741.11396500003   ,  eval_mig = 0.16 
+		 consuming 10.352648258209229s, time is 8                 
+		 sum=119379.19396500003 
+eval_bal = 123106.29357999841   ,  eval_mig = 0.7 
+		 consuming 9.868787288665771s, time is 9                 
+		 sum=125897.89357999842 
+eval_bal = 137251.03213400047   ,  eval_mig = 0.0 
+		 consuming 10.461230993270874s, time is 10                 
+		 sum=137251.03213400047 
+eval_bal = 116537.78789300054   ,  eval_mig = 0.76 
+		 consuming 9.47493052482605s, time is 11                 
+		 sum=119568.66789300054 
+eval_bal = 106255.94159800027   ,  eval_mig = 1.16 
+		 consuming 10.271921157836914s, time is 12                 
+		 sum=110882.02159800027 
+eval_bal = 111779.00169999892   ,  eval_mig = 0.16 
+		 consuming 9.452845811843872s, time is 13                 
+		 sum=112417.08169999892 
+eval_bal = 202266.04141700105   ,  eval_mig = 1.47 
+		 consuming 10.228004455566406s, time is 20                 
+		 sum=208128.40141700103 
+eval_bal = 175931.3834920013   ,  eval_mig = 0.0 
+		 consuming 9.363469362258911s, time is 21                 
+		 sum=175931.3834920013 
+eval_bal = 136453.4519270004   ,  eval_mig = 0.0 
+		 consuming 10.244895219802856s, time is 22                 
+		 sum=136453.4519270004 
+eval_bal = 108994.37800000017   ,  eval_mig = 0.0 
+		 consuming 9.409755945205688s, time is 23                 
+		 sum=108994.37800000017 
+eval_bal = 86223.0445409994   ,  eval_mig = 0.73 
+		 consuming 10.280117511749268s, time is 24                 
+		 sum=89134.2845409994 
+eval_bal = 78226.18914500003   ,  eval_mig = 1.19 
+		 consuming 9.403026580810547s, time is 25                 
+		 sum=82971.90914500003 
+eval_bal = 70850.64773700097   ,  eval_mig = 1.52 
+		 consuming 10.208209753036499s, time is 26                 
+		 sum=76912.40773700096 
+eval_bal = 67725.94234499976   ,  eval_mig = 0.0 
+		 consuming 9.49398422241211s, time is 27                 
+		 sum=67725.94234499976 
+eval_bal = 73030.96764400048   ,  eval_mig = 0.0 
+		 consuming 10.270356178283691s, time is 28                 
+		 sum=73030.96764400048 
+eval_bal = 97765.34324800022   ,  eval_mig = 20.32 
+		 consuming 9.420187711715698s, time is 29                 
+		 sum=178801.50324800023 
+eval_bal = 122332.32357199979   ,  eval_mig = 0.25 
+		 consuming 10.289137601852417s, time is 30                 
+		 sum=123329.32357199979 
+eval_bal = 179595.71447399975   ,  eval_mig = 1.14 
+		 consuming 9.36599087715149s, time is 31                 
+		 sum=184142.03447399975 
+eval_bal = 246480.47156900028   ,  eval_mig = 1.29 
+		 consuming 10.26313304901123s, time is 32                 
+		 sum=251624.99156900027 
+eval_bal = 270660.22719100147   ,  eval_mig = 1.51 
+		 consuming 9.382406234741211s, time is 33                 
+		 sum=276682.1071910015 
+eval_bal = 260255.8192560022   ,  eval_mig = 1.31 
+		 consuming 10.083576202392578s, time is 34                 
+		 sum=265480.0992560022 
+eval_bal = 236561.7393380012   ,  eval_mig = 0.0 
+		 consuming 9.646551370620728s, time is 35                 
+		 sum=236561.7393380012 
+eval_bal = 233495.2970899968   ,  eval_mig = 0.41 
+		 consuming 10.480834007263184s, time is 36                 
+		 sum=235130.3770899968 
+eval_bal = 248556.94063199905   ,  eval_mig = 0.0 
+		 consuming 9.695351600646973s, time is 37                 
+		 sum=248556.94063199905 
+eval_bal = 252385.63055899928   ,  eval_mig = 0.0 
+		 consuming 10.47017216682434s, time is 38                 
+		 sum=252385.63055899928 
+eval_bal = 246811.93172400002   ,  eval_mig = 0.0 
+		 consuming 9.787601709365845s, time is 39                 
+		 sum=246811.93172400002 
+eval_bal = 231488.68431400272   ,  eval_mig = 0.0 
+		 consuming 10.200708866119385s, time is 40                 
+		 sum=231488.68431400272 
+eval_bal = 200412.70751499914   ,  eval_mig = 0.22 
+		 consuming 9.851337432861328s, time is 41                 
+		 sum=201290.06751499913 
+eval_bal = 191118.11140900076   ,  eval_mig = 1.41 
+		 consuming 10.203962802886963s, time is 42                 
+		 sum=196741.19140900075 
+eval_bal = 198488.50893100054   ,  eval_mig = 0.68 
+		 consuming 10.003191947937012s, time is 43                 
+		 sum=201200.34893100054 
+eval_bal = 200877.62714099875   ,  eval_mig = 0.84 
+		 consuming 10.176620483398438s, time is 44                 
+		 sum=204227.54714099877 
+eval_bal = 174523.83910200023   ,  eval_mig = 0.06 
+		 consuming 10.196343660354614s, time is 45                 
+		 sum=174763.11910200023 
+eval_bal = 138352.97581899972   ,  eval_mig = 0.26 
+		 consuming 10.311501264572144s, time is 46                 
+		 sum=139389.85581899973 
+eval_bal = 106475.5908829993   ,  eval_mig = 0.24 
+		 consuming 10.133977174758911s, time is 47                 
+		 sum=107432.7108829993 
+eval_bal = 82590.44765300109   ,  eval_mig = 0.24 
+		 consuming 10.230802059173584s, time is 48                 
+		 sum=83547.56765300108 
+eval_bal = 74103.05084199957   ,  eval_mig = 1.53 
+		 consuming 10.082873106002808s, time is 49                 
+		 sum=80204.69084199957 
+eval_bal = 71019.7229700009   ,  eval_mig = 0.56 
+		 consuming 10.394572496414185s, time is 50                 
+		 sum=73253.0029700009 
+eval_bal = 65111.69034400004   ,  eval_mig = 0.23 
+		 consuming 9.90934133529663s, time is 51                 
+		 sum=66028.93034400004 
+eval_bal = 69755.81901600042   ,  eval_mig = 0.6 
+		 consuming 10.609133005142212s, time is 52                 
+		 sum=72148.61901600042 
+eval_bal = 95718.3232479996   ,  eval_mig = 0.74 
+		 consuming 9.829617023468018s, time is 53                 
+		 sum=98669.44324799959 
+eval_bal = 120972.98583900013   ,  eval_mig = 0.66 
+		 consuming 10.674740314483643s, time is 54                 
+		 sum=123605.06583900013 
+eval_bal = 177074.16596199872   ,  eval_mig = 0.74 
+		 consuming 9.572822093963623s, time is 55                 
+		 sum=180025.2859619987 
+eval_bal = 240086.45147000044   ,  eval_mig = 0.0 
+		 consuming 10.571821212768555s, time is 56                 
+		 sum=240086.45147000044 
+eval_bal = 247583.78055200123   ,  eval_mig = 0.0 
+		 consuming 9.564690113067627s, time is 57                 
+		 sum=247583.78055200123 
+eval_bal = 249637.55552499925   ,  eval_mig = 0.0 
+		 consuming 10.368578672409058s, time is 58                 
+		 sum=249637.55552499925 
+eval_bal = 227813.1715270009   ,  eval_mig = 0.67 
+		 consuming 9.604052305221558s, time is 59                 
+		 sum=230485.1315270009 
+eval_bal = 228742.335953   ,  eval_mig = 0.59 
+		 consuming 10.468733549118042s, time is 60                 
+		 sum=231095.255953 
+eval_bal = 245611.2938860009   ,  eval_mig = 0.94 
+		 consuming 9.58739423751831s, time is 61                 
+		 sum=249360.0138860009 
+eval_bal = 240487.08938399883   ,  eval_mig = 0.64 
+		 consuming 10.370173215866089s, time is 62                 
+		 sum=243039.40938399883 
+eval_bal = 240946.68156599792   ,  eval_mig = 0.42 
+		 consuming 9.705988645553589s, time is 63                 
+		 sum=242621.6415659979 
+eval_bal = 227376.2772819993   ,  eval_mig = 0.75 
+		 consuming 10.148972511291504s, time is 64                 
+		 sum=230367.2772819993 
+eval_bal = 193345.27312800012   ,  eval_mig = 0.77 
+		 consuming 9.580812692642212s, time is 65                 
+		 sum=196416.03312800013 
+eval_bal = 178339.36281900015   ,  eval_mig = 0.78 
+		 consuming 10.061956405639648s, time is 66                 
+		 sum=181450.00281900016 
+eval_bal = 187862.6969710011   ,  eval_mig = 1.08 
+		 consuming 9.617204427719116s, time is 67                 
+		 sum=192169.7369710011 
+eval_bal = 195375.27249899815   ,  eval_mig = 1.29 
+		 consuming 10.00059986114502s, time is 68                 
+		 sum=200519.79249899814 
+eval_bal = 173398.7658969982   ,  eval_mig = 1.29 
+		 consuming 9.61147665977478s, time is 69                 
+		 sum=178543.2858969982 
+eval_bal = 135140.04220800038   ,  eval_mig = 0.19 
+		 consuming 9.983602523803711s, time is 70                 
+		 sum=135897.76220800038 
+eval_bal = 103634.57522599955   ,  eval_mig = 0.59 
+		 consuming 9.764638662338257s, time is 71                 
+		 sum=105987.49522599955 
+eval_bal = 81488.99860200007   ,  eval_mig = 0.89 
+		 consuming 10.164857864379883s, time is 72                 
+		 sum=85038.31860200007 
+eval_bal = 74164.62083200045   ,  eval_mig = 0.48 
+		 consuming 9.936711072921753s, time is 73                 
+		 sum=76078.86083200046 
+eval_bal = 75434.09513999967   ,  eval_mig = 0.84 
+		 consuming 9.962272644042969s, time is 74                 
+		 sum=78784.01513999967 
+eval_bal = 69100.62115499917   ,  eval_mig = 0.72 
+		 consuming 9.967359781265259s, time is 75                 
+		 sum=71971.98115499917 
+eval_bal = 77960.92046699926   ,  eval_mig = 0.5 
+		 consuming 10.009521961212158s, time is 76                 
+		 sum=79954.92046699926 
+eval_bal = 94754.29737100184   ,  eval_mig = 0.67 
+		 consuming 9.991628885269165s, time is 77                 
+		 sum=97426.25737100185 
+eval_bal = 121870.54866599993   ,  eval_mig = 0.76 
+		 consuming 9.992403030395508s, time is 78                 
+		 sum=124901.42866599993 
+eval_bal = 169602.87617800006   ,  eval_mig = 1.02 
+		 consuming 10.074129343032837s, time is 79                 
+		 sum=173670.63617800007 
+eval_bal = 219627.30324599886   ,  eval_mig = 0.94 
+		 consuming 9.998865127563477s, time is 80                 
+		 sum=223376.02324599886 
+eval_bal = 230352.70404499955   ,  eval_mig = 0.55 
+		 consuming 10.162916660308838s, time is 81                 
+		 sum=232546.10404499955 
+eval_bal = 228778.89357599846   ,  eval_mig = 0.92 
+		 consuming 9.867151260375977s, time is 82                 
+		 sum=232447.85357599845 
+eval_bal = 214725.78979199726   ,  eval_mig = 0.56 
+		 consuming 10.267191648483276s, time is 83                 
+		 sum=216959.06979199726 
+eval_bal = 215832.73907599787   ,  eval_mig = 0.0 
+		 consuming 9.800729036331177s, time is 84                 
+		 sum=215832.73907599787 
+eval_bal = 224135.7783209998   ,  eval_mig = 0.58 
+		 consuming 10.198486566543579s, time is 85                 
+		 sum=226448.8183209998 
+eval_bal = 214680.9221210007   ,  eval_mig = 0.0 
+		 consuming 10.656784772872925s, time is 86                 
+		 sum=214680.9221210007 
+eval_bal = 205665.42376200194   ,  eval_mig = 1.14 
+		 consuming 10.25304913520813s, time is 87                 
+		 sum=210211.74376200195 
+eval_bal = 192634.05762599778   ,  eval_mig = 0.7 
+		 consuming 10.67436957359314s, time is 88                 
+		 sum=195425.6576259978 
+eval_bal = 181907.6595160008   ,  eval_mig = 1.53 
+		 consuming 9.947786331176758s, time is 89                 
+		 sum=188009.2995160008 
+eval_bal = 175848.81582499974   ,  eval_mig = 1.34 
+		 consuming 10.77030634880066s, time is 90                 
+		 sum=181192.73582499975 
+eval_bal = 185152.4994630014   ,  eval_mig = 1.07 
+		 consuming 9.821850299835205s, time is 91                 
+		 sum=189419.65946300142 
+eval_bal = 184775.53493900006   ,  eval_mig = 0.75 
+		 consuming 10.723655700683594s, time is 92                 
+		 sum=187766.53493900006 
+eval_bal = 168796.4687019998   ,  eval_mig = 0.34 
+		 consuming 9.728024005889893s, time is 93                 
+		 sum=170152.38870199982 
+eval_bal = 132394.7106079999   ,  eval_mig = 0.75 
+		 consuming 10.432762145996094s, time is 94                 
+		 sum=135385.7106079999 
+eval_bal = 103227.78332599957   ,  eval_mig = 1.04 
+		 consuming 9.733335971832275s, time is 95                 
+		 sum=107375.30332599957 

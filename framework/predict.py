@@ -40,6 +40,7 @@ import scipy.stats as scs
 from itertools import product                    # some useful functions
 from tqdm import tqdm_notebook
 
+import pmdarima as pm
 # Importing everything from forecasting quality metrics
 # from sklearn.metrics import r2_score, median_absolute_error, mean_absolute_error
 # from sklearn.metrics import median_absolute_error, mean_squared_error, mean_squared_log_error
@@ -138,7 +139,26 @@ def ARIMA(cpuArray, preSize, pmax, qmax):
 
 
 
+def auto(history_cpu,w,first=True):
+    df = pd.DataFrame(history_cpu)
+    df = df.reset_index()['cpu']#.rolling(window=360).mean()#.plot()
+    df = pd.DataFrame(df.rolling(window=360).mean(),columns=['cpu'])
+    df = df.dropna()
+    df = df.reset_index()
+    df = pd.DataFrame(df,columns=['cpu'])
+    fit = None
+    if first:
+        fit = pm.auto_arima(df['cpu'], trace=True , suppress_warnings=True, stepwise=False)
+    fit(df['cpu'])
+    forecast= fit.predict(n_periods=w)
+    return forecast
 
+def auto_list(history,w,first=True):
+    #if first:
+    fit = pm.auto_arima(history, trace=True , suppress_warnings=True, stepwise=False)
+    #fit(history)
+    forecast= fit.predict(n_periods=w)
+    return forecast
 # 非周期性：前十个单位的95%值来作为返回（CPU利用率）
 # --------- 参数 ----------
 # 窗口数 & 预测百分比
