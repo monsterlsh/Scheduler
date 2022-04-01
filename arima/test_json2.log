@@ -1,0 +1,45 @@
+67437
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.07660746574401855 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.21000456073906887, 0.3800028757153316, 0.21000398193511133] [0.21, 0.21, 0.21]
+0.2371218204498291 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.5, 0.5, 0.5]
+0.49419617652893066 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.2179546356201172 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.022843360900878906 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.12833905220031738 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.6041912824213237, 0.5624895559503522, 0.6874887186776326] [0.58, 0.58, 0.5]
+0.0930795669555664 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.19164538383483887 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.06886792182922363 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.02190423011779785 s
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.20336812938434, 0.19000589667131706, 0.2300048508049303] [0.17, 0.17, 0.17]
+0.09260296821594238 s

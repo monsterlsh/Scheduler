@@ -6,19 +6,28 @@ sys.path.append('..')
 from framework.cluster import Cluster
 from framework.monitor import Monitor
 from framework.scheduler import Scheduler
-
+from time import time
 
 class Simulation(object):
-    def __init__(self, machine_configs, instance_configs, trigger, algorithm,schedulePolicy=None,modelfilename=None):
+    def __init__(self, configs,args, trigger, algorithm,schedulePolicy=None):
+        instance_configs,machine_configs,mac_ids,inc_ids= configs
+        self.drl = args.drl
+        self.sand = args.sandpiper
         self.env = simpy.Environment()
         self.trigger = trigger
         self.cluster = Cluster()
+        self.cluster.add_old_new(mac_ids,inc_ids)
         self.cluster.configure_machines(machine_configs)
         self.cluster.configure_instances(instance_configs)
+        start = time()
+        if args.sandpiper == False and args.drl == False:
+            self.cluster.configure_pkl()
+        end = time()
+        
         # for k,v in self.cluster.machines.items():
         #     ins = np.array([x.cpu for x in v.instances.values()])
         #     print('machine_',k,'sum is',np.sum(ins),ins)
-        self.cluster.configure_pkl(modelfilename)
+        
         self.instance_cpu_curves = {
             self.cluster.machines[instance_config.machine_id].instances[instance_config.id]:
                 instance_config.cpu_curve for instance_config in instance_configs.values()
@@ -42,33 +51,41 @@ class Simulation(object):
         self.monitor.attach(self)
         self.scheduler.attach(self)
 
-    def run(self,drl=True,sand=False):
-        
-        #self.env.process(self.scheduler.run_sand())
+    def run(self):
 
-        if drl:
+        if self.drl:
             self.env.process(self.monitor.run())
-            #self.env.process(self.scheduler.run_drl())
-        elif sand:
+        elif self.sand:
             self.env.process(self.scheduler.run_sand())
         else:
             self.env.process(self.scheduler.run())
         self.env.run()
 
-
+    #for sandpiper
     def finished(self,isPeriod = False):
         if isPeriod:
             for vmid,vm in self.cluster.instances.items():
                 if self.env.now >= len(vm.cpulist) : #TODO the type of cpulist is int. why? 
                     return True
-        
-        for instance_cpu_curve in self.instance_curves.values():
-            if not instance_cpu_curve[0] and not instance_cpu_curve[1]:
-                return True
-        
-        # for instance_memory_curve in self.instance_memory_curves.items():
-        #     if not instance_memory_curve:
+        else:
+            flag = True
+            for k,inc in self.cluster.instances.items():
+                x = len(inc.cpulist)
+                if flag:
+                    #print(f'\t\tIN finished the cpuHistory len is {x}')
+                    flag = False
+                
+                if x <= 0 :
+                    print('finish at inc id=',k)
+                    return True
+        # for instance_cpu_curve in self.instance_curves.values():
+        #     x = len(instance_cpu_curve[0])
+        #     if flag:
+        #         print(f'IN finished the cpuHistory len is {x}')
+        #         flag = False
+        #     if x<=0 :#and not instance_cpu_curve[1]:
         #         return True
+        
         return False
     def finished_drl(self):
         for instance_memory_curve in self.instance_memory_curves.values():

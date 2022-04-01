@@ -1,0 +1,76 @@
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+67437  3989
+		 update x_to consuming  0.10759997367858887
+Simulatinon refit Start!!!!!!!
+wrong :  old_id =  48035 [0.52 0.41 0.   0.38 0.12 0.21 0.25 0.   0.22 0.42] model= 302
+wrong :  old_id =  65795 [0.29 1.03 0.89 0.79 0.9  0.74 1.09 1.03 0.06 1.48] model= 203
+Traceback (most recent call last):
+  File "main.py", line 57, in <module>
+    main(args)
+  File "main.py", line 51, in main
+    test_all(args)
+  File "main.py", line 39, in test_all
+    sim = Simulation(configs, args,ThresholdTrigger(), ThresholdFirstFitAlgorithm(),SchdeulerPolicyAlgorithm())
+  File "/hdd/lsh/Scheduler/framework/simulation.py", line 24, in __init__
+    self.cluster.configure_pkl()
+  File "/hdd/lsh/Scheduler/framework/cluster.py", line 88, in configure_pkl
+    self.refit()
+  File "/hdd/lsh/Scheduler/framework/cluster.py", line 181, in refit
+    self.incmem_model[k] = self.model_cpu[model_name].apply(cpulist,refit=True)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/mlemodel.py", line 4255, in apply
+    res = self._apply(mod, refit=refit, fit_kwargs=fit_kwargs, **kwargs)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/mlemodel.py", line 3635, in _apply
+    res = mod.fit(**fit_kwargs)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/arima/model.py", line 390, in fit
+    res = super().fit(
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/mlemodel.py", line 704, in fit
+    mlefit = super(MLEModel, self).fit(start_params, method=method,
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py", line 563, in fit
+    xopt, retvals, optim_settings = optimizer._fit(f, score, start_params,
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/optimizer.py", line 241, in _fit
+    xopt, retvals = func(objective, gradient, start_params, fargs, kwargs,
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/optimizer.py", line 651, in _fit_lbfgs
+    retvals = optimize.fmin_l_bfgs_b(func, start_params, maxiter=maxiter,
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/scipy/optimize/lbfgsb.py", line 198, in fmin_l_bfgs_b
+    res = _minimize_lbfgsb(fun, x0, args=args, jac=jac, bounds=bounds,
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/scipy/optimize/lbfgsb.py", line 345, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/scipy/optimize/lbfgsb.py", line 290, in func_and_grad
+    f = fun(x, *args)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/scipy/optimize/optimize.py", line 327, in function_wrapper
+    return function(*(wrapper_args + args))
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py", line 531, in f
+    return -self.loglike(params, *args) / nobs
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/mlemodel.py", line 939, in loglike
+    loglike = self.ssm.loglike(complex_step=complex_step, **kwargs)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/kalman_filter.py", line 983, in loglike
+    kfilter = self._filter(**kwargs)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/kalman_filter.py", line 903, in _filter
+    self._initialize_state(prefix=prefix, complex_step=complex_step)
+  File "/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/tsa/statespace/representation.py", line 983, in _initialize_state
+    self._statespaces[prefix].initialize(self.initialization,
+  File "statsmodels/tsa/statespace/_representation.pyx", line 1362, in statsmodels.tsa.statespace._representation.dStatespace.initialize
+  File "statsmodels/tsa/statespace/_initialization.pyx", line 288, in statsmodels.tsa.statespace._initialization.dInitialization.initialize
+  File "statsmodels/tsa/statespace/_initialization.pyx", line 406, in statsmodels.tsa.statespace._initialization.dInitialization.initialize_stationary_stationary_cov
+  File "statsmodels/tsa/statespace/_tools.pyx", line 1206, in statsmodels.tsa.statespace._tools._dsolve_discrete_lyapunov
+numpy.linalg.LinAlgError: LU decomposition error.

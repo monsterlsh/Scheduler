@@ -9,6 +9,7 @@ from framework.machine import MachineConfig
 from framework.simulation import Simulation
 from framework.trigger import ThresholdTrigger
 import pandas as pd
+import argparse
 def simple_test(filepath):
     res_struct_filename = os.path.join(os.getcwd(),'struct.json')
     # 测试用
@@ -27,27 +28,31 @@ def simple_test(filepath):
     struct = sim.cluster.structure
     with open(res_struct_filename,'w') as file_job:
         json.dump(struct,file_job)
-def test_all(filepath,modelfilepath):
-    res_struct_filename = os.path.join(os.getcwd(),'struct.json')
+def test_all(args):
+    filepath = '/hdd/jbinin/AlibabaData/target/'
     
-    instance_configs,machine_configs,old_new = InstanceConfigLoader(filepath)
+    res_struct_filename = os.path.join(os.getcwd(),'struct.json')
+    #instance_configs,machine_configs,mac_ids,inc_ids
+    configs = InstanceConfigLoader(filepath)
     #print(f' all inc {len(instance_configs) } and  mac is {machine_configs}')
    
-    sim = Simulation(machine_configs, instance_configs, ThresholdTrigger(), ThresholdFirstFitAlgorithm(),SchdeulerPolicyAlgorithm(),modelfilepath)
-    sand = False
-    sim.cluster.add_old_new(old_new)
-    sim.run(False,sand)
+    sim = Simulation(configs, args,ThresholdTrigger(), ThresholdFirstFitAlgorithm(),SchdeulerPolicyAlgorithm())
+    sim.run()
     struct = sim.cluster.structure
     with open(res_struct_filename,'w') as file_job:
         json.dump(struct,file_job)
     pass
-
-if __name__ == '__main__':
+def main(args):
     macFile = '/Users/lsh/Documents/ecnuIcloud/Trace/alibaba_2018/intp_dir'
     windowsFile = 'D:\Data\workplace\ecnuicloud\Traces\intp_dir\\'
     test_10s = '/hdd/jbinin/alibaba2018_data_extraction/data/hole'
     linux_file = '/hdd/jbinin/AlibabaData/target/'
     modelfilepath = '/hdd/lsh/Scheduler/arima/models_cpu'
-    test_all(linux_file,modelfilepath)
-    #simple_test(linux_file)
+    test_all(args)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='manual to this script')
+    parser.add_argument('--sandpiper', type=bool, default =False)
+    parser.add_argument('--drl', type=bool, default =False)
+    args = parser.parse_args()
+    main(args)
     

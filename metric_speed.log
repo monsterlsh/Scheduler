@@ -1,0 +1,76 @@
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+67437  3989
+		 update x_to consuming  0.16277098655700684
+modle load finished!
+At time 1
+		 1 consuming arima 0.17511296272277832s cpu_wrong=0,mem_wrong=0
+		 70 consuming arima 0.54549241065979s cpu_wrong=0,mem_wrong=0
+		 376 consuming arima 0.6019570827484131s cpu_wrong=0,mem_wrong=0
+		 756 consuming arima 0.6832566261291504s cpu_wrong=0,mem_wrong=0
+		 1231 consuming arima 0.7860534191131592s cpu_wrong=0,mem_wrong=0
+		 1822 consuming arima 0.9034435749053955s cpu_wrong=0,mem_wrong=0
+		 2560 consuming arima 1.058830738067627s cpu_wrong=0,mem_wrong=0
+		 3476 consuming arima 1.245027780532837s cpu_wrong=0,mem_wrong=0
+		 4624 consuming arima 1.470108985900879s cpu_wrong=0,mem_wrong=0
+		 6048 consuming arima 1.755173683166504s cpu_wrong=0,mem_wrong=0
+		 7829 consuming arima 2.133767604827881s cpu_wrong=0,mem_wrong=0
+		 10041 consuming arima 2.564385414123535s cpu_wrong=0,mem_wrong=0
+		 12792 consuming arima 3.1242430210113525s cpu_wrong=0,mem_wrong=0
+		 16228 consuming arima 3.825944662094116s cpu_wrong=0,mem_wrong=0
+		 20505 consuming arima 4.700882434844971s cpu_wrong=0,mem_wrong=0
+		 25840 consuming arima 38.93343448638916s cpu_wrong=0,mem_wrong=0
+		 25841 consuming arima 0.29192185401916504s cpu_wrong=0,mem_wrong=0
+		 32490 consuming arima 78.4299750328064s cpu_wrong=0,mem_wrong=0
+		 32491 consuming arima 0.2759730815887451s cpu_wrong=0,mem_wrong=0
+		 33981 consuming arima 3.9656262397766113s cpu_wrong=0,mem_wrong=0
+		 33982 consuming arima 2.441835403442383s cpu_wrong=0,mem_wrong=0
+		 33983 consuming arima 3.1007986068725586s cpu_wrong=0,mem_wrong=0
+		 33994 consuming arima 0.9268417358398438s cpu_wrong=0,mem_wrong=0
+		 33995 consuming arima 2.50223708152771s cpu_wrong=0,mem_wrong=0
+		 33998 consuming arima 1.0653965473175049s cpu_wrong=0,mem_wrong=0
+		 33999 consuming arima 0.8252387046813965s cpu_wrong=0,mem_wrong=0
+		 34007 consuming arima 4.43761420249939s cpu_wrong=0,mem_wrong=0
+		 34008 consuming arima 2.5778229236602783s cpu_wrong=0,mem_wrong=0
+		 34020 consuming arima 5.220592498779297s cpu_wrong=0,mem_wrong=0
+		 34021 consuming arima 2.7647151947021484s cpu_wrong=0,mem_wrong=0
+		 34034 consuming arima 6.909752368927002s cpu_wrong=0,mem_wrong=0
+		 34035 consuming arima 2.791947364807129s cpu_wrong=0,mem_wrong=0
+		 34036 consuming arima 5.298511028289795s cpu_wrong=0,mem_wrong=0
+		 34037 consuming arima 1.2280378341674805s cpu_wrong=0,mem_wrong=0
+		 34050 consuming arima 9.707960844039917s cpu_wrong=0,mem_wrong=0
+		 34051 consuming arima 3.296429395675659s cpu_wrong=0,mem_wrong=0
+		 34052 consuming arima 3.961456060409546s cpu_wrong=0,mem_wrong=0
+		 34053 consuming arima 25.60648202896118s cpu_wrong=0,mem_wrong=0
+		 34054 consuming arima 8.491329669952393s cpu_wrong=0,mem_wrong=0
+		 34055 consuming arima 8.01904296875s cpu_wrong=0,mem_wrong=0
+		 34056 consuming arima 5.257724761962891s cpu_wrong=0,mem_wrong=0
+		 34057 consuming arima 4.8626930713653564s cpu_wrong=0,mem_wrong=0
+		 34058 consuming arima 14.565122365951538s cpu_wrong=0,mem_wrong=0
+		 34059 consuming arima 8.5522780418396s cpu_wrong=0,mem_wrong=0
+		 34060 consuming arima 7.805203676223755s cpu_wrong=0,mem_wrong=0
+		 34061 consuming arima 62.62993383407593s cpu_wrong=0,mem_wrong=0
+		 34062 consuming arima 111.41378140449524s cpu_wrong=0,mem_wrong=0
+		 34063 consuming arima 89.1108090877533s cpu_wrong=0,mem_wrong=0
+		 34068 consuming arima 2.726417064666748s cpu_wrong=0,mem_wrong=0
+		 34069 consuming arima 74.54075288772583s cpu_wrong=0,mem_wrong=0
+		 34070 consuming arima 2.8492519855499268s cpu_wrong=0,mem_wrong=0

@@ -27,8 +27,10 @@ def ResourceUsage(cpu_t, x_t):
 def isAllUnderLoad(x_t, cpu_t, mem_t, CPU_MAX, MEM_MAX):
     CPU_t = ResourceUsage(cpu_t, x_t)
     MEM_t = ResourceUsage(mem_t, x_t)
+   
     is_cpu = (CPU_t < CPU_MAX).all()
     is_mem = (MEM_t < MEM_MAX).all()
+    #print('\t\t\t isload?? : ',is_cpu,is_mem)
     is_all = is_cpu and is_mem # 所以资源都不过载才返回True
     
     return is_all
@@ -51,19 +53,24 @@ def Sandpiper(x_t0, N, cpu_t0, mem_t0, M, CPU_MAX, MEM_MAX):
     Vol_pm = 10000 / ((100 - CPU_t0) * (100 - MEM_t0)) # 注意每PM/VM的资源需求要<100%
     Vol_vm = 10000 / ((100 - cpu_t0) * (100 - mem_t0)) # 1*N矩阵
     VSR = Vol_vm/ mem_t0 # 1*N矩阵
-    # print('mem_t0',mem_t0)
-    # print('Vol_vm',Vol_vm)
-    # print('VSR',VSR)
-    # print('Vol_pm',Vol_pm)
     # 机器按Vol值按序排序，存储机器号
     pm_asc = Vol_pm.argsort()
     pm_desc = pm_asc[::-1]
-    print('pm_desc',pm_desc)
-    x_t = x_t0.copy() # 初始化
+    #print('pm_desc',pm_desc)
+    placement = x_t0.copy() # 初始化
     # 按序对每台机器做迁出
-    
+    pm_asc.astype(int)
     pm_desc.astype(int)
+    migs_inc = {}
+    pmout = {}
+    pmin={}
+    print(f'\t to schedule pm num is {len(pm_desc)}')
+    idx=0
     for pm_out in pm_desc:
+        #print('\t\t sand piper',idx)
+        idx+=1
+        if CPU_t0[pm_out] <= CPU_MAX and MEM_t0[pm_out] <= MEM_MAX: # 按序迁出该机器上的VM直到机器不过载
+            continue
         # 将每台机器上的VM降序排序，存储VM号
         vm_in_pm = np.where(x_t0[:, pm_out] == 1)[0] # 该机器上VM的VM号
         VSR_in_pm = VSR[vm_in_pm] # 这些VM的VSR
@@ -72,30 +79,48 @@ def Sandpiper(x_t0, N, cpu_t0, mem_t0, M, CPU_MAX, MEM_MAX):
         vm_asc = vm_VSR.T[np.lexsort(vm_VSR)].T # 按照VSR升序排序
         #vm_asc = vm_VSR[:,vm_VSR[1].argsort()]
         vm_desc = vm_asc[0, ::-1] # 获取降序排序后的VM号
-        
-        isMig = 0 # 该机器上是否已有VM迁移
-        # print(vm_desc)
-        # print(pm_asc)
-        # print('CPU_t0',CPU_t0)
-        # print('cpu_t0',cpu_t0)
         vm_desc.astype(int)
-        pm_asc.astype(int)
-        print('vm_desc',vm_desc)
-        for vm in vm_desc: # 从VSR最大的VM开始被迁移
-            if isMig:
+        for vms in vm_desc: # 从VSR最大的VM开始被迁移
+            vm = int(vms)
+            if CPU_t0[pm_out] <= CPU_MAX and MEM_t0[pm_out] <= MEM_MAX: # 按序迁出该机器上的VM直到机器不过载
                 break
-            for pm_in in pm_asc: # 从Vol最小的开始迁入
-                if CPU_t0[int(pm_in)] + cpu_t0[int(vm)] <= CPU_MAX and MEM_t0[int(pm_in)] + mem_t0[int(vm)] <= MEM_MAX: # 循环结束条件是有机器放得下
-                    x_t[int(vm)][int(pm_out)] = 0 # 迁出
-                    x_t[int(vm)][int(pm_in)] = 1 # 迁入
-                    isMig = 1
+            for pm_inx in pm_asc: # 从Vol最小的开始迁入
+                pm_in = int(pm_inx)
+                if CPU_t0[pm_in] + cpu_t0[vm] <= CPU_MAX and MEM_t0[pm_in] + mem_t0[vm] <= MEM_MAX: # 有机器放得下
+                    placement[vm][pm_out] = 0 # 迁出机器
+                    CPU_t0[pm_out] = CPU_t0[pm_out] - cpu_t0[vm]
+                    MEM_t0[pm_out] = MEM_t0[pm_out] - mem_t0[vm]
+                    
+                    placement[vm][pm_in] = 1 # 迁入机器
+                    CPU_t0[pm_in] = CPU_t0[pm_in] + cpu_t0[vm]
+                    MEM_t0[pm_in] = MEM_t0[pm_in] + mem_t0[vm]
+                    if pm_out in pmout:
+                        pmout[pm_out].append(vm)
+                    else:
+                        pmout[pm_out]=[vm]
+                    if pm_in in pmin:
+                        pmin[pm_in].append(vm)
+                    else:
+                        pmin[pm_in]=[vm]
                     break
-        print('ismig',isMig)
+        
         # 循环结束条件是没有机器过载
-        if isAllUnderLoad(x_t, cpu_t0, mem_t0, CPU_MAX, MEM_MAX):
+        if (CPU_t0 <= CPU_MAX).all() and (MEM_t0 <= MEM_MAX).all():
+            f = isAllUnderLoad(placement, cpu_t0, mem_t0, CPU_MAX, MEM_MAX)
+            print(f'\t\tall pm is underload ?={f}')
             break
         
-    return x_t
+    
+    #if isMig == 1:
+        #print('\t\tvm 移动：',migs_inc)
+    for k,out in pmout.items():
+        print(f'\t\t\tpm_out{k}: {out}')
+    for k,out in pmin.items():
+        print(f'\t\t\tpm_in{k}: {out}')
+    # 循环结束条件是没有机器过载   
+    
+    
+    return placement
 
 
 # ******************************以下只用于计算评价指标******************************

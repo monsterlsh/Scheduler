@@ -1,0 +1,56 @@
+67437
+instanceid_70769.csv /hdd/lsh/Scheduler/arima/models_cpu/100.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.08, 0.0, 0.0]
+0.10006189346313477 s
+instanceid_68923.csv /hdd/lsh/Scheduler/arima/models_cpu/500.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.2099978944219552, 0.20999393923003934, 0.20998995017811878] [0.38, 0.21, 0.21]
+0.14542126655578613 s
+instanceid_55527.csv /hdd/lsh/Scheduler/arima/models_cpu/500.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.4999999504720461, 0.49999985758039744, 0.4999997639844256] [0.0, 0.5, 0.5]
+0.1413121223449707 s
+instanceid_39415.csv /hdd/lsh/Scheduler/arima/models_cpu/500.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.24982500076293945 s
+instanceid_30287.csv /hdd/lsh/Scheduler/arima/models_cpu/000.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.03960013389587402 s
+instanceid_63765.csv /hdd/lsh/Scheduler/arima/models_cpu/101.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.10371160507202148 s
+instanceid_32620.csv /hdd/lsh/Scheduler/arima/models_cpu/004.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.49999793823040484, 0.4999962650854482, 0.49999500763330523] [0.75, 0.58, 0.58]
+0.23217153549194336 s
+instanceid_58126.csv /hdd/lsh/Scheduler/arima/models_cpu/104.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.26120996475219727 s
+instanceid_17392.csv /hdd/lsh/Scheduler/arima/models_cpu/100.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.07238292694091797 s
+instanceid_28808.csv /hdd/lsh/Scheduler/arima/models_cpu/000.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.0, 0.0, 0.0] [0.0, 0.0, 0.0]
+0.024058818817138672 s
+instanceid_9128.csv /hdd/lsh/Scheduler/arima/models_cpu/004.pkl
+/root/anaconda3/envs/tf_lsh/lib/python3.8/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+[0.16999956328761426, 0.16999934503774852, 0.16999934832065972] [0.25, 0.17, 0.17]
+0.163071870803833 s

@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import gc
+import pyDOE
 # 计算迁移开销算法
 # 输入为t-1时刻和t时刻的VM放置情况以及VM的此刻mem需求
 # 输出为t时刻的迁移开销
@@ -38,8 +39,95 @@ def CostOfLoadBalanceSimplify(cpu_t, mem_t, x_t, b):
     return cost_bal
 
 
-# 非完全随机放置算法【优化版】
+
+
 def RandomGreedySimplify(M, a, b, u, v, x_last, cpu_t, mem_t):
+    x_t = x_last.copy()
+    CPU_t = ResourceUsageSimplify(cpu_t, x_last) # 当前放置下各PM的资源使用量
+    MEM_t = ResourceUsageSimplify(mem_t, x_last)
+    avg_CPU = np.sum(cpu_t) / M # 计算当前时刻最负载均衡情况下每台机器应承载的资源均量
+    avg_MEM = np.sum(mem_t) / M
+    
+    
+    
+    cpumem = np.vstack((cpu_t, mem_t)).T # 合并为一个二维数组
+    cpumem_desc = cpumem[np.lexsort(cpumem[:,::-1].T)] # 按照cpu的大小降序排序
+    
+    thresh_out = (avg_CPU ** 2 + b * avg_MEM ** 2) / 2 # 判断迁出机器候选集的标准
+    thresh_in = thresh_out # 判断迁入机器候选集的标准，初始化
+    cpu_sum = 0
+    mem_sum = 0
+    for i in cpumem_desc: # 对数组中的每一行，即每一个cpu-mem对
+        cpu_sum = cpu_sum + i[0]
+        mem_sum = mem_sum + i[1]
+        if cpu_sum < avg_CPU and mem_sum < avg_MEM: # 还没达到均值
+            temp = (i[0] ** 2 + b * i[1] ** 2) / 2
+            thresh_in = thresh_in - temp
+        else: # cpu或mem之和大于等于均值，则结束循环
+            temp = ((avg_CPU - cpu_sum + i[0]) ** 2 + b * (avg_MEM - mem_sum + i[1]) ** 2) / 2
+            thresh_in = thresh_in - temp
+            break
+    
+    
+    '''
+    max_cpu = np.amax(cpu_t) # 找出当前container的最大资源需求
+    max_mem = np.amax(mem_t)
+    
+    thresh_out = (avg_CPU ** 2 + b * avg_MEM ** 2) / 2 # 判断迁出机器候选集的标准
+    thresh_in = ((avg_CPU ** 2 - avg_CPU * max_cpu) + b * (avg_MEM ** 2 - avg_MEM * max_mem)) / 2 # 判断迁入机器候选集的标准
+    '''
+    
+    
+    bal = CostOfLoadBalanceSimplify(cpu_t, mem_t, x_last, b)
+    
+    over = np.where(bal > thresh_out)[0] # 迁出候选集
+    under = np.where(bal < thresh_in)[0] # 迁入候选集
+    
+    # 先不抽样了，全都进行迁出
+    # 在over中随机选择u比例个机器作为迁出机器
+    # source = np.random.choice(over, np.ceil(u * len(over)), replace = False) # 随机乱序选择，向上取整可保证至少选择1个
+    print(f'\t\t over : {over} under{under}')
+    # 对每台迁出机器随机选择v比例个VM迁出
+    # for s in source:
+    for s in over:
+        mig_candi_s = np.where(x_last[:, s] == 1)[0] # 能被迁走的VM候选集
+        # mig = np.random.choice(mig_candi, np.ceil(v * len(mig_candi_s)), replace = False) # 随机乱序选择
+        n=1 
+        samples=np.ceil(v*len(mig_candi_s))
+        samples = int(samples)
+        #print(samples)
+        lhd = pyDOE.lhs(n, samples) # 拉丁超立方抽样，输出[0,1]
+        mig_loc = lhd * len(mig_candi_s)
+        mig_loc = mig_loc[:,0].astype(int) # 即要被迁移的contaienr的id在候选集中的位置
+        mig = np.unique(mig_candi_s[mig_loc]) # 要被迁移的contaienr的id，去掉重复值
+        print(f'\t\t\t候选集 {s}: 要被迁移的contaienr: {mig}')
+        # 对每个迁移VM贪心选择最优迁入机器
+        for m in mig:
+            destination = s # 目标机器初始化为原本所在的机器
+            
+            for d in under: # 对每台低于均值的机器
+                # 假设把m迁移到d上，带来的负载均衡开销降低值
+                bal_d_cpu = cpu_t[m] * (CPU_t[s] - cpu_t[m] - CPU_t[d]) # 该VM资源量*（原机器上除该VM之外的资源总量-目标机器上原本的资源总量）
+                bal_d_mem = mem_t[m] * (MEM_t[s] - mem_t[m] - MEM_t[d])
+                bal_d = bal_d_cpu + b * bal_d_mem
+                mig_m = a * (M-1) * mem_t[m] # 该VM的迁移开销，为此时mem
+                
+                max_bal = mig_m # 初始化为迁移开销，则保证每个负载均衡开销节省量都要大于迁移开销才能迁入
+                if bal_d > max_bal: # 如果当前负载均衡节省量大于历史最大节省量，则迁入该机器
+                    max_bal = bal_d
+                    destination = d
+            
+            if destination != s: # 如果要迁
+                x_t[m][s] = 0 # 把该VM从原来的机器上删除，添加到目标机器上
+                x_t[m][destination] = 1
+    
+    return x_t
+
+
+
+
+# 非完全随机放置算法【优化版】
+def RandomGreedySimplify_old(M, a, b, u, v, x_last, cpu_t, mem_t):
     x_t = x_last.copy()
     CPU_t = ResourceUsageSimplify(cpu_t, x_last) # 当前放置下各PM的资源使用量
     MEM_t = ResourceUsageSimplify(mem_t, x_last)
@@ -167,7 +255,7 @@ def SchedulePolicy(Z, K, W, u, v, x_t0, N, cpu, mem, M, CPU_MAX, MEM_MAX, a, b):
             
             cost_min = cost
             placement = x_t1
-            #print('scheduler cost:',(placement ==x_t0).all() )
+            print('scheduler cost:',(placement ==x_t0).all() )
     # 执行完Z次随机采样后，按照最终placement矩阵的值进行调度
     del x_last
     del x_t1

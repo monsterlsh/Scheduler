@@ -1,16 +1,10 @@
 from abc import ABC, abstractmethod
-import functools
-import imp
 import random
 from nbformat import write
 import numpy as np
-from pyparsing import alphas
 from framework.cluster import Cluster 
+from arima.predict import arimas
 from framework import predict as pe
-import pmdarima
-import gc
-from sklearn.metrics import median_absolute_error, mean_squared_error, mean_squared_log_error,mean_absolute_percentage_error
-#from framework.random_greedy_cpu import SchedulePolicy
 import framework.random_greedy_cpumem_simplify as sxy
 import framework.sandpiper as sand
 from time import time 
@@ -21,6 +15,10 @@ class Algorithm(ABC):
     def __call__(self, *args):
         pass
 
+
+'''
+SNANDPIPER algortihm
+'''
 class ThresholdFirstFitAlgorithm(Algorithm):
     def __call__(self, cluster:Cluster, clock):
         # for inst in instances_to_reschedule:
@@ -28,135 +26,100 @@ class ThresholdFirstFitAlgorithm(Algorithm):
         #         inst.machine.to_schedule = False
         #         cluster.machines_to_schedule.remove(inst.machine)
         #     inst.machine.pop(inst.id)
-        return self.sand(cluster,clock)
+        cluster.update_t0()
+        cluster.update_cpu_mem() #更新clock下 每个container的cpu mem值
+        self.CPU_MAX = 15
+        flag = self.isAllUnderLoad(cluster.t_0,cluster.cpu,cluster.mem,self.CPU_MAX, MEM_MAX=75)
+        if flag == False:
+            
+            value=self.sand(cluster,clock)
+            return value
+        else :
+            print(' \t no schedule ')
+        return 0
+    def ResourceUsage(self,cpu_t, x_t):
+        x_cput = x_t.copy().T
+        CPU_t = np.matmul(x_cput,cpu_t)
+        return CPU_t
+    def isAllUnderLoad(self,x_t, cpu_t, mem_t, CPU_MAX, MEM_MAX):
+        CPU_t = self.ResourceUsage(cpu_t, x_t)
+        MEM_t = self.ResourceUsage(mem_t, x_t)
+    
+        is_cpu = (CPU_t < CPU_MAX).all()
+        is_mem = (MEM_t < MEM_MAX).all()
         
-        
+        print('\t\t\t simulate trigger in algorithm isload?? : ',is_cpu,is_mem)
+        is_all = is_cpu and is_mem # 所以资源都不过载才返回True
+        return is_all   
+     
     def sand(self,cluster:Cluster,clock):
         cluster.update_t0()
+        W =1
+        #inc_cpu_pre,inc_mem_pre,inc_cpu_actual,inc_mem_actual = arima(cluster,clock,W)
+        #cluster.update_cpu_mem()
         N = cluster.t_0.shape[0]
         M = cluster.t_0.shape[1]
         start = time()
-        placement = sand.Sandpiper(cluster.t_0,N,cluster.cpu,cluster.mem,M,CPU_MAX=50, MEM_MAX=75)
+        beforeplace = sxy.CostOfLoadBalanceSimplify(cluster.cpu,cluster.mem ,cluster.t_0,b=0.01)
+        
+        placement = sand.Sandpiper(cluster.t_0,N,cluster.cpu,cluster.mem,M,self.CPU_MAX, MEM_MAX=75)
         flag = np.array_equal(cluster.t_0, placement, equal_nan=False)
-       # print(' \t\t --- flag',flag)
         eval_bal = sxy.CostOfLoadBalanceSimplify(cluster.cpu,cluster.mem , placement,b=0.01)
         eval_mig = sxy.CostOfMigration(cluster.t_0, placement,cluster.mem)
         end = time()
         value = eval_bal+(M-1)*eval_mig
-        with open('/hdd/lsh/Scheduler/metric_sand.log','a') as f:
-            f.write(f'eval_bal = {eval_bal}   ,  eval_mig = {eval_mig} \n\t\t consuming {end-start}s, time is {clock} \
-                \n\t\t sum={value} \n')
-        f.close()
+        csvfile = '/hdd/lsh/Scheduler/data/sandpiper_15.csv'
+        with open(csvfile,'a') as f:
+            writer = csv.writer(f)
+            writer.writerow([int(clock),beforeplace,eval_bal])
+        # with open('/hdd/lsh/Scheduler/metric_sand.log','a') as f:
+        #     f.write(f'eval_bal = {eval_bal}   ,  eval_mig = {eval_mig} \n\t\t consuming {end-start}s, time is {clock} \
+        #         \n\t\t sum={value} \n')
+        # f.close()
+        print(f'\t\t x_t0-placement change ?={flag}change?eval_bal = {eval_bal}   ,  eval_mig = {eval_mig} \n\t\t\t consuming {end-start}s, time is {clock} \
+                \n\t\t\t sum={value} \n')
         cluster.update_t0(placement)
         return value
+    
+    '''
+    先进先出
+    '''
     def ffa(self,cluster,clock):
         candidate_machine = None
         candidate_inst = None
         machines = cluster.machines
         machines_sort = {k:v for k,v in sorted(machines.items(),key= lambda x:x[1].cpu,reverse=True)}
-        instances_to_reschedule = cluster.instances_to_reschedule
-        ''' for macid,machine in machines_sort.items():
-            for inst in instances_to_reschedule:
-                if machine.accommodate_w(inst):
-                    candidate_machine = machine
-                    candidate_inst = inst
-                    break'''
-                
-        
+        instances_to_reschedule = cluster.instances_to_reschedul   
         candidate_machine = next(iter(machines_sort.values()))
         if instances_to_reschedule:
             candidate_inst = list(instances_to_reschedule)[0]
         return candidate_machine, candidate_inst
-    def ChooseWhcihInstance(self,simulation,cluster,instances_to_reschedule):
-        for inst in instances_to_reschedule:
-            if inst.machine.to_schedule:
-                cluster.machines_to_schedule.remove(inst.machine)
-                inst.machine.pop(inst.id)
-            if inst.machine.to_schedule and not simulation.trigger.isOverhead(inst.machine) :
-                inst.machine.to_schedule = False
-                inst.machine = None
+'''
+SXY scheduler policy algorithm
+随机采样
+'''
 class SchdeulerPolicyAlgorithm(Algorithm):
     def __call__(self, cluster:Cluster, env,first,end):
         self.env = env
         self.cluster = cluster
         value = self.schedule_sort(first,end)
         return value
-    def reduce0(self,forecast,actual):
-        index = np.array(np.where(actual==0))
-        new_ac = np.delete(actual,index)
-        new_fore = np.delete(forecast,index)
-        return new_fore,new_ac
+    
     def schedule_sort(self,first,end):
         W = 2
         # # 过去时间应该是从头开始
         # inc_cpuHistory = {inc_id:inc.cpulist[first:end+1] for inc_id,inc in self.cluster.instances.items()}
         #  #memory
         # inc_memoryHistory = {inc_id:inc.memlist[first:end+1] for inc_id,inc in self.cluster.instances.items()}
-        forecast_cpu = {}
-        forecast_mem = {}
-        startPredict = time()
-        iters =0 
-        for inc_id,instance in self.cluster.instances.items():
-            cpuHist = np.array(instance.cpulist[:end+1])
-            memHist = instance.memlist[first:end+1]
-            start = time()
-            newmape = 0
-            flag = False
-            if np.mean(cpuHist[-5:-1]) == 0 or np.mean(memHist[-5:-1]) :
-                next_cpu = np.zeros(W)
-                next_mem = np.zeros(W)
-            else:
-                flag = True
-                try:
-                    old_inc_id = self.cluster.old_new[inc_id] 
-                    model_id = self.cluster.inc_model_cpu[str(old_inc_id)]
-                    model =  self.cluster.model[model_id].apply(cpuHist,refit=True)
-                    next_cpu = model.forecast(W,alphas=0.01)
-                except:
-                    print(f'container inc_id = {inc_id} 的model不行')
-                    model =  pmdarima.arima.auto_arima(cpuHist)
-                    
-                    next_cpu = model.predict(W,alphas=0.01)
-                    print('there is auto')
-                    
-                actual = np.array(instance.cpulist[end+1:end+W+1])
-                forecast,actual = self.reduce0(next_cpu,actual)
-                if actual.shape[0] != 0:
-                    newmape = mean_absolute_percentage_error(forecast,actual)
-            
-                       
-            
-
-            # 不预测
-            # next_cpu = instance.cpulist[end:end+W]
-            # next_mem = instance.memlist[end:end+W]
-            
-            after = time()
-            all = after-start
-            if flag : 
-                print(f' iter = {iters} the time consuming in auto arima is {(all)}s and  end is { end} instance  id is {inc_id}  the new mape = {newmape}' )
-            forecast_mem[inc_id] =next_mem
-            forecast_cpu[inc_id] = next_cpu
-            iters += 1;
-        after =  time()
-        #print(f'the time consuming in auto arima is {(after-startPredict)}  and  end is { end} ')  
-        inc_cpu_pre = np.array([predicts for inc_id,predicts in forecast_cpu.items()])
-        inc_mem_pre = np.array([predicts  for inc_id,predicts  in forecast_mem.items()])
-        inc_cpu_actual = np.array([inc.cpulist[end:end+W] for inc_id,inc in self.cluster.instances.items()])
-        inc_mem_actual = np.array([inc.memlist[end:end+W] for inc_id,inc in self.cluster.instances.items()])
-
+        inc_cpu_pre,inc_mem_pre,inc_cpu_actual,inc_mem_actual = arimas(self.cluster,end,W)
         N = inc_cpu_pre.shape[0]
         M = self.cluster.t_0.shape[1]
         #TODO or the schedule use
         start = time()
         
         if inc_cpu_pre.shape[1] <= W:
-            placement,cost_min = sxy.SchedulePolicy( 10, 10, W, u=0.8, v=0.2, x_t0=self.cluster.t_0.copy(), N=N, cpu=inc_cpu_pre,mem=inc_mem_pre, M=M, CPU_MAX=50, MEM_MAX=75,a=0.004,b=0.01)
+            placement,cost_min = sxy.SchedulePolicy( 10, 10, W, u=0.8, v=0.2, x_t0=self.cluster.t_0, N=N, cpu=inc_cpu_pre,mem=inc_mem_pre, M=M, CPU_MAX=30, MEM_MAX=75,a=0.004,b=0.01)
             after =  time() 
-            
-            #1433s 23min
-            #print(f'the time consuming in SXY is {(after-start)}  and  end is { end} ')
-            
             # 评价指标
             # 执行当前决策后的负载均衡开销和迁移开销
             # 输入：下一时刻的各VM的资源需求量cpu_t1，每次调度得出的放置决策placement，迁移之前的放置情况x_t0，单位迁移开销E
@@ -169,38 +132,16 @@ class SchdeulerPolicyAlgorithm(Algorithm):
             after =  time() 
             diff = np.where(placement != self.cluster.t_0)
             value = eval_bal+(M-1)*eval_mig
-            with open('/hdd/lsh/Scheduler/metric.log','a') as f:
-                f.write(f'At time {end}, eval_bal={eval_bal},eval_mig = {eval_mig}  \n\t\t the different array is = {diff} \n\t\t \
+            print(f'\t\t At time {end}, eval_bal={eval_bal},eval_mig = {eval_mig}  \
+                  \n\t\t the different array is = {diff} \n\t\t \
                         the time consuming in SXY is {(after-start)}. cost_min ={cost_min}  \n\t\t \
-                        你要的数据：{value}   \n ')
-            f.close()
+                        mertric  = {value}   \n ')
             #print((placement == self.cluster.t_0).all() )
             self.cluster.update_t0(placement)
-           # print('N ={0} M={1}, eval_bal = {2} eval_mig = {3}'.format(N,M,eval_bal,eval_mig))
-            #print(f'the x_t0 is {self.cluster.t_0}')
             del placement
         return value
             
             
             
-    def avgSchedule(self,machine_ids:list,inc_cpuNow_sort:list):
-        for mac_id in machine_ids:
-            self.cluster.machines[mac_id].instances.clear()
-        for inc in inc_cpuNow_sort:
-            #print(f'instance {instance_config.id} \'s cpu is {instance_config.cpu}')
-            inc_id ,instance = inc
-            mac_set = set()
-            mac_num = len(self.cluster.machines.items())
-            while True:
-                machine_id = random.randint(0,mac_num-1)
-                mac_set.add(machine_id)
-                machine = self.cluster.machines.get(machine_id, None)
-                assert machine is not None
-                if machine.add_period_inc(inc_id,instance,self.cluster.instances):
-                    #print(f'In period {self.env.now}, instance {inc_id} choose machine {machine_id}')
-                    break
-                if len(mac_set) == mac_num:
-                    machine.add_period_inc(inc_id,instance,self.cluster.instances,True)
-                    break
-    def SchedulePolicy(self,Z, K, W, x_t0, N, cpu, E, M, CPU_MAX, a):
-        pass
+    
+  

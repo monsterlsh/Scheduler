@@ -1,7 +1,7 @@
 import logging
 import random
 from time import time
-from framework import sandpiper as sand
+from framework import sandpiper as sand, trigger
 import numpy as np
 
 
@@ -148,13 +148,16 @@ class Scheduler(object):
     def run(self):
         sum = 0
         while not self.simulation.finished(True):
-            # self.everytime()
+            if sum==0:
+                yield self.env.timeout(1)
+                sum += 1
+            print(f'At time {self.env.now}')
             start = time()
             end = self.env.now
             value = self.algorithm_schedule(self.cluster, self.env, 0, end)
             sum += value
             after = time()
-            print(f'sxy 调度决策消耗了{(after-start)}s time go on {self.env.now} sum = {sum}')
+            print(f'\t\t sxy 调度决策消耗了{(after-start)}s metric sum = {sum}')
             yield self.env.timeout(1)
         print('now finish time:', self.env.now)
 
@@ -173,16 +176,22 @@ class Scheduler(object):
 
     def run_sand(self):
         sum = 0
-        while not self.simulation.finished(True):
+        while not self.simulation.finished():
+           
+                
             self.sample()
-            self.simulation.trigger(self.cluster, self.env.now)
-            if len(self.cluster.machines_to_schedule) > 0:
-                print('At', self.env.now, 'scheduler was triggered!')
-                # print("Machines to schedule", [machine.id for machine in self.cluster.machines_to_schedule])
-                sum += self.algorithm_ff(self.cluster, self.env.now)
-                print(f'\t\t sum = {sum}')
-                # self.find_candidates()
-                # self.make_decision2()
-                print(f'\t\tperiod schedule on time {self.env.now} ')
+            print('time is :',self.env.now)
+            #self.simulation.trigger(self.cluster, str(self.env.now))
+            # beScheduled = len(self.cluster.machines_to_schedule)
+            # if beScheduled > 0:
+            start = time()
+            trig =  self.algorithm_ff(self.cluster, self.env.now)
+            
+            if trig > 0:
+                sum+=trig
+                end = time()
+                print(f'At time {self.env.now} scheduler was triggered! consuming {(end-start)/60} min,metric sum = {sum}')
+            else:
+                print(f'\tat {self.env.now} all containers are underload')
             yield self.env.timeout(1)
         print('now finish time:', self.env.now)
